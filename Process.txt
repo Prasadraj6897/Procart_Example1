@@ -1,0 +1,66 @@
+1. Make a Procart Folder
+2. cd Procart(cmd)
+3. Create client folder  - (create-react-app client)--(cmd)
+4. Create server folder
+
+Inside Client Folder				
+	Install Packages
+		react-redux
+		redux
+		axios
+		react-router-dom
+		mdbootstrap
+		@material-ui/core
+		@material-ui/styles
+		@material-ui/icons
+
+
+
+Inside Server Folder				
+	Install Packages
+		bcryptjs
+		express
+		chalk
+		morgan
+		mongoose
+		jsonwebtoken
+
+push to git in new repository 
+	(in root folder)
+	git init
+	git add .
+	git commit -m "message"
+
+	git remote add-url origin "url" (for new repo add)
+	git remote set-url origin "url" (for chnge new repo add)
+	
+	git branch main
+	git push origin main
+
+in github if any folder has arrow
+		git rm --cached client  (client is a folder)
+		git commit -m ""
+		rimraf client\.git
+		git add .
+		git commit -m ""
+		git push 
+
+4.added postman account
+5. Create componemt folder src folder because if you put outside it shows error
+
+6. Create navbar and routes	
+
+7. Create Home, Mobiles, watches, laptops and admin Pages.
+
+8. Create sample Footer and import in route.
+
+9. Create Admin Folder.
+		Create Admin, Input, Icon, Styles, Page.
+		
+		In Admin Page Create (Using Material Ui).
+
+			create Signin and signup in single form
+
+10. Install formik, yup for valdation purpose
+
+		
