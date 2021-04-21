@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 
 
 
-export const signIn = async (req, res)=>{
+export const adminsignIn = async (req, res)=>{
     const {email, password} = req.body
     // console.log(email, password)
     try{
@@ -20,6 +20,10 @@ export const signIn = async (req, res)=>{
             res.status(400).json({message : "Password doesn't Match"})
         }
 
+        if(existingUser.role != 'admin'){
+            res.status(400).json({message : "You have no access"})
+        }
+
         const token = jwt.sign({email: existingUser.email, id: existingUser._id}, 'test', {expiresIn: "1h"})
 
         res.status(200).json({result:existingUser, token})
@@ -31,10 +35,12 @@ export const signIn = async (req, res)=>{
     }
 }
 
-export const signUp = async (req, res)=>{
+export const adminsignUp = async (req, res)=>{
         //, role, contactNumber, profilePicture
 
-    const { firstName, lastName, email, password, ConfirmPassword} = req.body
+    // const { firstName, lastName, email, password, ConfirmPassword} = req.body
+
+    console.log(firstName, lastName, email, password, ConfirmPassword)
     
     try{
         const existingUser = await Users.findOne({email})
