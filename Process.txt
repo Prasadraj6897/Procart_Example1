@@ -24,6 +24,10 @@ Inside Server Folder
 		morgan
 		mongoose
 		jsonwebtoken
+		nodemon
+		dotenv
+		body-parser
+		cors
 
 push to git in new repository 
 	(in root folder)
@@ -62,5 +66,15 @@ in github if any folder has arrow
 			create Signin and signup in single form
 
 10. Install formik, yup for valdation purpose
+
+11. Install express-validator for validating payload (Rizwan khan videos)
+
+12. Use Postman to check api
+		Create new workspace
+		
+		If its not working like could not send request
+			click settings
+				off ssl certificate
+				restart the postman
 
 		
