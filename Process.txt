@@ -77,4 +77,7 @@ in github if any folder has arrow
 				off ssl certificate
 				restart the postman
 
+mongodb+srv://Prasad_Database:<password>@cluster0.1qfop.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
+
 		

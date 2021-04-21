@@ -2,6 +2,8 @@ import express from 'express'
 import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import mongoose from "mongoose"
+import UserRouter from './Routers/Users.js'
 
 const app = express();
 
@@ -11,18 +13,21 @@ dotenv.config();
 app.use(bodyParser.json({limit:"30mb", extended: true}));
 app.use(bodyParser.urlencoded({limit:"30mb", extended: true}));
 
-app.get('/',(req,res)=>{
-    res.status(200).json({
-        message:'Hello from server'
-    })
-})
+app.use(cors());
+app.options('*', cors());
+app.set('port', process.env.PORT || 5000);
 
-app.post('/data',(req,res, next)=>{
-    res.status(200).json({
-        message:req.body
-    })
-})
+app.use('/users', UserRouter);
 
-app.listen(process.env.PORT, () =>{
-    console.log(`Server running on Port no ${process.env.PORT}`)
-})
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
+
+mongoose.connect(process.env.CONNECTION_URL , {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex : true})
+    .then(()=>app.listen(process.env.PORT, ()=>console.log(`Server running ${process.env.PORT}`)))
+    .catch((err)=>console.log(err))
+
+mongoose.set('useFindAndModify', false)
