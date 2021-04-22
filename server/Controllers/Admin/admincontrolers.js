@@ -24,7 +24,7 @@ export const adminsignIn = async (req, res)=>{
             res.status(400).json({message : "You have no access"})
         }
 
-        const token = jwt.sign({email: existingUser.email, id: existingUser._id}, 'test', {expiresIn: "1h"})
+        const token = jwt.sign({email: existingUser.email, id: existingUser._id, role: existingUser.role}, 'test', {expiresIn: "1h"})
 
         res.status(200).json({result:existingUser, token})
 
@@ -67,12 +67,3 @@ export const adminsignUp = async (req, res)=>{
         return res.status(400).json({message:error.message})
     }
 }
-
-// export const requiresignin = async (req, res, next)=>{
-//     // console.log(req.headers.authorization)
-//     const token = req.headers.authorization.split(" ")[1];
-//     const user = jwt.verify(token, 'test')
-//     req.user = user
-//     next();
-
-// }

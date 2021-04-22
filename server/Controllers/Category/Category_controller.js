@@ -1,7 +1,8 @@
 import Category from '../../Models/Category.js'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import slugify from 'slugify'
+
+
+// import CreateCategories from '../CategoryList/CategoryList.js'
 
 export const createCategory = async (req, res)=>{
     // const {email, password} = req.body
@@ -28,15 +29,54 @@ export const createCategory = async (req, res)=>{
 }
 
 export const getCategory = async (req, res)=>{
-    try{
-        const result = await Category.find({})
-        
-        res.status(200).json({result})
-     }
-     catch(error){
-        
-        return res.status(500).json({message : error})
-     }
 
+
+        // for getting whole category
+        Category.find({})
+        .exec((error, Categ)=>{
+            if(error)
+            {
+                return res.status(500).json({error})
+            }
+            if(Categ)
+            {
+                // for getting sub category
+                const CategoryList = CreateCategories(Categ)
+                res.status(200).json({CategoryList})
+            }
+        })
+        
+        
+    
+}
+
+function CreateCategories (CategoryfromResult, parentId = null){
+    
+    const CategoryList=[]
+    let category;
+
+    if(parentId == null)
+    {
+        //if there is no parentId it is undefined so we are pushing cateogory without parentid like Electronics, men, women
+        category = CategoryfromResult.filter(cat => cat.parentId == undefined)
+    }
+    else{
+        //if there is parentId it is pushing cateogory with parentid like mobiles, laptops from Electronics
+        category = CategoryfromResult.filter(cat => cat.parentId == parentId)
+    }
+    // // for pushing samsung, Mi into Mobiles
+    //don't forget to put of in for loop
+
+    for(let categ of category)
+    {
+        CategoryList.push({
+            _id: categ._id,
+            name: categ.name,
+            slug: categ.slug,
+            childern: CreateCategories(CategoryfromResult, categ._id),
+        })
+    }
+    return CategoryList;
+   
 
 }
