@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 import Users from '../../Models/Users.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-
+import {validationResult} from "express-validator"
 
 
 export const adminsignIn = async (req, res)=>{
@@ -38,9 +38,9 @@ export const adminsignIn = async (req, res)=>{
 export const adminsignUp = async (req, res)=>{
         //, role, contactNumber, profilePicture
 
-    // const { firstName, lastName, email, password, ConfirmPassword} = req.body
+    const { firstName, lastName, email, password, ConfirmPassword} = req.body
 
-    console.log(firstName, lastName, email, password, ConfirmPassword)
+    // console.log(firstName, lastName, email, password, ConfirmPassword)
     
     try{
         const existingUser = await Users.findOne({email})
