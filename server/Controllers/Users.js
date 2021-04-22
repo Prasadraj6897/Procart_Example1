@@ -62,11 +62,3 @@ export const signUp = async (req, res)=>{
     }
 }
 
-export const requiresignin = async (req, res, next)=>{
-    // console.log(req.headers.authorization)
-    const token = req.headers.authorization.split(" ")[1];
-    const user = jwt.verify(token, 'test')
-    req.user = user
-    next();
-
-}

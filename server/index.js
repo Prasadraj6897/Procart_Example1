@@ -5,6 +5,7 @@ import cors from 'cors'
 import mongoose from "mongoose"
 import UserRouter from './Routers/Users.js'
 import AdminRouter from './Routers/Admin/adminuser.js'
+import CategoryRouter from './Routers/Category/Category.js'
 
 const app = express();
 
@@ -19,7 +20,8 @@ app.options('*', cors());
 app.set('port', process.env.PORT || 5000);
 
 app.use('/users', UserRouter);
-app.use('/users', AdminRouter);
+app.use('/admin', AdminRouter);
+app.use('/category', CategoryRouter);
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

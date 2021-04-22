@@ -4,8 +4,8 @@ import {SignUpValidationRequest, SignInValidationRequest, isRequestValidators} f
 const router = express.Router();
 
 
-router.post('/admin/signup', SignUpValidationRequest, isRequestValidators, adminsignUp)
-router.post('/admin/signin', SignInValidationRequest, isRequestValidators, adminsignIn)
+router.post('/signup', SignUpValidationRequest, isRequestValidators, adminsignUp)
+router.post('/signin', SignInValidationRequest, isRequestValidators, adminsignIn)
 
 
 export default router;

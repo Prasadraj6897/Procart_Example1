@@ -30,6 +30,7 @@ Inside Server Folder
 		dotenv
 		body-parser
 		cors
+		slugify
 
 push to git in new repository 
 	(in root folder)
