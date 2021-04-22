@@ -22,8 +22,8 @@ let Mobiles = () => {
           height: 140,
         },
         fullContent:{
-            maxWidth: 100,
-            height: auto,
+            maxWidth: '100px',
+            height: '100px',
             // img
 
         }
@@ -43,6 +43,7 @@ let Mobiles = () => {
                         {/* <img class="img-fluid w-100"
                             src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13.jpg"/> */}
                         <CardMedia
+                                
                                 className={classes.fullContent}
                                 image={Image1}
                                 title="Contemplative Reptile"
@@ -81,7 +82,7 @@ let Mobiles = () => {
                     <span class="text-grey"><s>$36.99</s></span>
                 </h6>
                 <br></br>
-                &nsbp
+                
                 <Button type="button" class="btn btn-primary btn-sm mr-1 mb-2">
                         <i class="fas fa-shopping-cart pr-2"></i>Add to cart
                 </Button>

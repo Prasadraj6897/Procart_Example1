@@ -3,6 +3,8 @@
 3. Create client folder  - (create-react-app client)--(cmd)
 4. Create server folder
 
+Install react-snippets 2.1.5 extension in vscode for shortcut
+
 Inside Client Folder				
 	Install Packages
 		react-redux
@@ -78,6 +80,8 @@ in github if any folder has arrow
 				restart the postman
 
 mongodb+srv://Prasad_Database:<password>@cluster0.1qfop.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
+13.if you need to change the port in client side use  "start": "set PORT=4000 && react-scripts start", FOR WINDOWS and for linux dont use 'set' in scripyt in package.json and dont delete ant line
 
 
 		
