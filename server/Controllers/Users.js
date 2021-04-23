@@ -20,7 +20,7 @@ export const signIn = async (req, res)=>{
             return res.status(400).json({message : "Password doesn't Match"})
         }
 
-        const token = jwt.sign({email: existingUser.email, id: existingUser._id}, 'test', {expiresIn: "1h"})
+        const token = jwt.sign({email: existingUser.email, id: existingUser._id, role: existingUser.role}, 'test', {expiresIn: "1h"})
 
         return res.status(200).json({result:existingUser, token})
 

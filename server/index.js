@@ -7,6 +7,7 @@ import UserRouter from './Routers/Users.js'
 import AdminRouter from './Routers/Admin/adminuser.js'
 import CategoryRouter from './Routers/Category/Category.js'
 import ProductRouter from './Routers/Product/Product.js'
+import Cartrouter from './Routers/Cart/Cart.js'
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/users', UserRouter);
 app.use('/admin', AdminRouter);
 app.use('/category', CategoryRouter);
 app.use('/product', ProductRouter);
+app.use('/cart', Cartrouter);
 
 
 app.use(function(req, res, next) {
