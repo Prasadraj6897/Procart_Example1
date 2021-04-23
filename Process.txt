@@ -31,6 +31,8 @@ Inside Server Folder
 		body-parser
 		cors
 		slugify
+		multer(for file upload in server side)
+		shortid (for creating unique id)
 
 push to git in new repository 
 	(in root folder)
@@ -86,3 +88,6 @@ mongodb+srv://Prasad_Database:<password>@cluster0.1qfop.mongodb.net/myFirstDatab
 
 14. Use JWT token we create sign for token, its actually a token it has value what we asigned .
 		
+15. If you use potman in browser we may not able to upload files it shows error, so download Postman in desktop and use it
+
+16. multer error unexpected field postman with multiple files use  upload.array('name') instead of  upload.single('productPictures')

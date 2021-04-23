@@ -4,13 +4,11 @@ import {createCategory, getCategory} from '../../Controllers/Category/Category_c
 import {requiresignin, adminMiddleware} from "../../common-middleware/authMiddleware.js"
 import bodyParser from 'body-parser'
 
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
+
 
 const router = express.Router();
 
 router.post('/createCategory', requiresignin, adminMiddleware, createCategory)
-router.get('/getCategory', urlencodedParser,  getCategory)
-// router.post('/admin/signin', SignInValidationRequest, isRequestValidators, adminsignIn)
-
+router.get('/getCategory',   getCategory)
 
 export default router;

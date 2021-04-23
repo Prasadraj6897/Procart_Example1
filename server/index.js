@@ -6,6 +6,7 @@ import mongoose from "mongoose"
 import UserRouter from './Routers/Users.js'
 import AdminRouter from './Routers/Admin/adminuser.js'
 import CategoryRouter from './Routers/Category/Category.js'
+import ProductRouter from './Routers/Product/Product.js'
 
 const app = express();
 
@@ -22,6 +23,8 @@ app.set('port', process.env.PORT || 5000);
 app.use('/users', UserRouter);
 app.use('/admin', AdminRouter);
 app.use('/category', CategoryRouter);
+app.use('/product', ProductRouter);
+
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
