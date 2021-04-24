@@ -8,6 +8,7 @@ import AdminRouter from './Routers/Admin/adminuser.js'
 import CategoryRouter from './Routers/Category/Category.js'
 import ProductRouter from './Routers/Product/Product.js'
 import Cartrouter from './Routers/Cart/Cart.js'
+import * as path from 'path';
 
 const app = express();
 
@@ -20,6 +21,12 @@ app.use(bodyParser.urlencoded({limit:"30mb", extended: true}));
 app.use(cors());
 app.options('*', cors());
 app.set('port', process.env.PORT || 5000);
+
+//to load static image in browser use below link
+const __dirname = path.resolve();
+
+app.use('/public', express.static( path.join(path.dirname(__dirname), '/server/uploads')))
+//
 
 app.use('/users', UserRouter);
 app.use('/admin', AdminRouter);

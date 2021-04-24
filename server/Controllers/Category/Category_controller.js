@@ -8,10 +8,15 @@ export const createCategory = async (req, res)=>{
     // const {email, password} = req.body
     // console.log(req.body.name)
     try{
+        
        const categoryObj = {
            name: req.body.name,
-           slug: slugify(req.body.name)
+           slug: slugify(req.body.name),
+           
        }
+       if(req.file){
+        categoryObj.categoryImage =  process.env.API + '/public/' + req.file.filename
+    }
 
        if(req.body.parentId)
        {
