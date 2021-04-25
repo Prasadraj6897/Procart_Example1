@@ -1,4 +1,4 @@
-import {SIGNUPUSERDATA, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,} from "../actions/auth.action"
+import {SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,LOGOUT} from "../actions/auth.action"
 
 let initial_state  = {
     token: null,
@@ -21,10 +21,9 @@ let auth_reducer = (state = initial_state, action) =>{
                 ...state,
                 authenticating: true,
             }
-            break;
+          
         case LOGIN_SUCCESS :    
-            console.log("LOGIN_SUCCESS")
-               
+                           
             return {
                 ...state,
                 result: action.payload.result,
@@ -32,13 +31,28 @@ let auth_reducer = (state = initial_state, action) =>{
                 authenticate: true,
                 authenticating: false,
             }
-            break;
-        //     case SIGNUPUSERDATA :
-           
-        //     return {
-        //         // state,
-        //         User_Data :action.payload,
-        //     }
+        case LOGOUT:
+            localStorage.clear();
+            return{ ...initial_state};
+        
+        case SIGNUP_REQUEST:           
+            return {
+                ...state,
+                authenticating: true,
+            }
+        case SIGNUP_SUCCESS :           
+            return {
+                ...state,
+                result: action.payload.result,
+                token: action.payload.token,
+                authenticating: false,
+                authenticate: true
+            }
+        case SIGNUP_FAILURE :           
+            return {
+                ...state,
+                authenticating: false,
+            }
         default:
             return state;
     }

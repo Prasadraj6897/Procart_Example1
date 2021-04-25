@@ -19,15 +19,11 @@ import { Redirect } from 'react-router'
 
 
 
-const initialState = {firstname:'', lastname:'', email:'', password:'', confirmpassword : ''}
+const initialState = {firstName:'', lastName:'', email:'', password:'', ConfirmPassword : ''}
 
 let Admin = () => {
 
-    useEffect(() => {
-        if(!auth.authenticate){
-            dispatch(isUserLoggedIn())
-        }
-    }, [])
+    
 
     const dispatch = useDispatch();
     const auth = useSelector( (state) =>
@@ -63,6 +59,10 @@ let Admin = () => {
     }
     if(auth.authenticate){
         return <Redirect to={'/'} />
+    }
+    if(auth.authenticating)
+    {
+        return(<p>Loading..!</p>)
     }
     
 
@@ -129,8 +129,8 @@ let Admin = () => {
                                 (
                                     <>
                                         
-                                        <Input name="firstname" label="First Name" handlechange={handlechange} autoFocus half />
-                                        <Input name="lastname" label="Last Name" handlechange={handlechange} half />
+                                        <Input name="firstName" label="First Name" handlechange={handlechange} autoFocus half />
+                                        <Input name="lastName" label="Last Name" handlechange={handlechange} half />
                                         
                                     </>
                                 )    
@@ -138,7 +138,7 @@ let Admin = () => {
                             <Input name="email" label="Email" handlechange={handlechange} type={"email"}/>
                             <Input name="password" label="Password" handlechange={handlechange} type={showPassword ? 'text' : "password"} handleShowPassword ={handleShowPassword}/>
                             
-                            {isSignUp &&  <Input name="confirmpassword" label="Confirm Password" handlechange={handlechange} type= "password"/>}
+                            {isSignUp &&  <Input name="ConfirmPassword" label="Confirm Password" handlechange={handlechange} type= "password"/>}
                         </Grid>
 
                         <Button type="submit" fullWidth variant="contained" color="inherit" className={classes.submit} > 

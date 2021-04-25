@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBLink , MDBNavbarToggler, MDBCollapse, MDBDropdown,
 MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBContainer, MDBIcon,  MDBTabPane, MDBTabContent, MDBBtn ,MDBRow } from "mdbreact";
 import 'mdbreact/dist/css/mdb.css'
-import {Link} from 'react-router-dom'
+import {Link,useHistory} from 'react-router-dom'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import Avatar from "@material-ui/core/Avatar/Avatar"
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
+import Typography  from '@material-ui/core/Typography/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -21,9 +21,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import clsx from 'clsx';
-
-
+import Button from "@material-ui/core/Button/Button"
+import {useDispatch, useSelector} from "react-redux"
 import useStyles from "./css/SideNavStyles.js"
+
+import {logout_action} from '../../actions/auth.action.js'
 
 let NavBar = () => {
     const [collapseID, setcollapseID] = useState("")
@@ -34,6 +36,16 @@ let NavBar = () => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
 
+    const history = useHistory()
+    const dispatch = useDispatch();
+
+    const Auth_token = useSelector( (state) =>
+            
+        state.Auth_root_reducer
+
+    )
+
+
     const handleDrawerOpen = () => {
         setOpen(true);
       };
@@ -41,11 +53,21 @@ let NavBar = () => {
       const handleDrawerClose = () => {
         setOpen(false);
       };
+
+      const logout = () => {
+        dispatch(logout_action())
+        // Auth_token = null;
+        history.push('/admin')
+
+    }
  
 
   return (
     // <MDBContainer>      
         <MDBNavbar color="secondary-color" dark expand="md" style={{height:'10%'}}>
+            {/* <pre>{JSON.stringify(Auth_token.result)}</pre> */}
+            {/* <pre>{JSON.stringify(AuthToken)}</pre> */}
+            
             {/* for side toogle */}
            
 
@@ -119,6 +141,7 @@ let NavBar = () => {
                             </Link>
                         </MDBNavItem>
                         <MDBNavItem>
+                            
                             <Link className='navbar-brand' to='/laptops'>
                                 <strong className="white-text">Laptops</strong>
                             </Link>
@@ -143,22 +166,43 @@ let NavBar = () => {
                                 <MDBIcon icon="shopping-cart" className="ml-1" />
                             </Link>
                         </MDBNavItem>
-                        <MDBNavItem>
-                            <MDBDropdown>
-                                <MDBDropdownToggle className="dopdown-toggle" nav>
-                                    <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" className="rounded-circle z-depth-0"
-                                        style={{ height: "35px", padding: 0 }} alt="" />
-                                </MDBDropdownToggle>
-                                <MDBDropdownMenu className="dropdown-default" right>
-                                    <Link className='navbar-brand' to='/register'>
-                                        <MDBDropdownItem >Register</MDBDropdownItem>
-                                    </Link>
-                                    {/* <Link className='navbar-brand' to='/signin'>
-                                        <MDBDropdownItem >SignIn</MDBDropdownItem>
-                                    </Link> */}
-                                </MDBDropdownMenu>
-                            </MDBDropdown>
-                        </MDBNavItem>
+                        {" "}
+                        {
+                            Auth_token.token == null?
+                                ""
+                            :
+                            (
+                                <MDBNavItem>
+                                    <MDBDropdown>
+                                
+                                        <MDBDropdownToggle className="dopdown-toggle" nav>
+                                            {/* <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" className="rounded-circle z-depth-0"
+                                                style={{ height: "35px", padding: 0 }} alt="" /> */}
+                                                 <Avatar >
+                                                    {Auth_token.result.firstName.charAt(0)}
+                                                </Avatar>
+                                                 
+                                        </MDBDropdownToggle>
+                                        <MDBDropdownMenu className="dropdown-default" right>
+                                            <Typography variant="h6"> 
+                                                {Auth_token.result.firstName} {" "} {Auth_token.result.lastName}
+                                            </Typography>
+                                            <Link className='navbar-brand' >
+                                                <MDBDropdownItem onClick = {logout}>Logout</MDBDropdownItem>
+                                            </Link> 
+                                            
+                                            {/* <Link className='navbar-brand' to='/signin'>
+                                                <MDBDropdownItem >SignIn</MDBDropdownItem>
+                                            </Link> */}
+                                        </MDBDropdownMenu>
+                                    </MDBDropdown>
+                                </MDBNavItem>
+                            )
+                            
+                        }
+                            
+                            
+                       
                     </MDBNavbarNav>
                 </MDBCollapse>
             </main>

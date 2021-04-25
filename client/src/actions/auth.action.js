@@ -1,26 +1,51 @@
 import axiosInstance from "../Components/helpers/axios";
 
 
-const SIGNUPUSERDATA = "SIGNUPUSERDATA";
+const SIGNUP_REQUEST = "SIGNUP_REQUEST";
+const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+const SIGNUP_FAILURE = "SIGNUP_FAILURE";
 const LOGIN_REQUEST = "LOGIN_REQUEST";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGIN_FAILURE = "LOGIN_FAILURE";
+const LOGOUT = "LOGOUT";
 
 
 let signup_action = (userdata, history) => {
-    console.log(userdata)
+    
     return async (dispatch) => {
            
         try{
             
-            // dispatch({type : SIGNUPUSERDATA})
-            // let format = {
-            //     headers: {
-            //         type : "application/json"
-            //     }
-            // }
-            // await axios.post(USER_API_BASE_URL, userdata); 
-            // history.push("/")
+            dispatch({type : SIGNUP_REQUEST})
+            const res = await axiosInstance.post('/signup',{...userdata})
+           
+            
+            if(res.status === 200){
+                const {message, token, result} = res.data;
+
+                //below put token it causes error
+                localStorage.setItem('token', token)
+                localStorage.setItem('result', JSON.stringify(result))
+                dispatch(
+                    {
+                        type : SIGNUP_SUCCESS, 
+                        payload:{message,token, result}
+                    }
+                )
+                history.push('/')
+            }
+            else{
+                if(res.status === 400){
+                    dispatch({
+                            type : SIGNUP_FAILURE, 
+                            payload:{
+                                error : res.data.error
+                            }
+                        }
+                    )
+                }
+            }
+
         }catch(error){
 
         }
@@ -99,4 +124,18 @@ let isUserLoggedIn = () => {
     }
 }
 
-export {SIGNUPUSERDATA, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, signup_action, login_action, isUserLoggedIn}
+let logout_action = () => {
+    // console.log("result, token", result, token)
+    return async (dispatch) => {
+        
+        try{
+            
+            
+            dispatch({type : LOGOUT})
+        }catch(error){
+
+        }
+    } 
+}
+
+export {SIGNUP_REQUEST, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, SIGNUP_SUCCESS, SIGNUP_FAILURE, signup_action, login_action, isUserLoggedIn, logout_action}

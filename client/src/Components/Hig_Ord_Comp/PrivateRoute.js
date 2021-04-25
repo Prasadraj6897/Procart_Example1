@@ -10,7 +10,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
                     }
                     else 
                     {
-                        return <Redirect to={'/register'} />
+                        return <Redirect to={'/admin'} />
                     }
                 }}
             />

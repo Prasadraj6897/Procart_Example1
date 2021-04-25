@@ -6,7 +6,7 @@ import {store} from "./store/store"
 // require('react-dom');
 // window.React2 = require('react');
 // console.log(window.React1 === window.React2);
-
+window.store = store;
 let App = () =>{
 	return(
 		<>
