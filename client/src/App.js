@@ -1,6 +1,7 @@
 import React from 'react'
 import Routers from './Components/Routes/Routes'
-
+import {Provider} from "react-redux"
+import {store} from "./store/store"
 
 // require('react-dom');
 // window.React2 = require('react');
@@ -9,8 +10,9 @@ import Routers from './Components/Routes/Routes'
 let App = () =>{
 	return(
 		<>
-
-			<Routers />
+			<Provider store = {store}>
+				<Routers />
+			</Provider>
 
 		</>
 	)

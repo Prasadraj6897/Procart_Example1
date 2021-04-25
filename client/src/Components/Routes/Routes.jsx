@@ -8,6 +8,7 @@ import Admin from '../Pages/AdminPages/Admin'
 import Mobiles from '../Pages/Mobiles/Mobiles'
 // import Watches from '../Pages/Watches'
 import Footer from '../Pages/Footer'
+import PrivateRoute from '../Hig_Ord_Comp/PrivateRoute'
 
 let Routers = () => {
     return(
@@ -15,7 +16,7 @@ let Routers = () => {
             <Router>
                 <Navbar />
                 <Switch>
-                    <Route exact path='/' component={HomePage} />
+                    <PrivateRoute exact path='/' component={HomePage} />
                     <Route exact path='/register' component={Admin} />
                     {/* <Route exact path='/laptops' component={Laptops} /> */}
                     <Route exact path='/mobiles' component={Mobiles} />

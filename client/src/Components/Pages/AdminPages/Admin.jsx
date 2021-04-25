@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import Button from "@material-ui/core/Button/Button"
 import Avatar from "@material-ui/core/Avatar/Avatar"
@@ -13,13 +13,31 @@ import Input from "./Input"
 import {Formik, Form} from 'formik'
 import * as Yup from "yup"
 
+import {useDispatch, useSelector} from "react-redux"
+import {signup_action, login_action, isUserLoggedIn} from "../../../actions/auth.action"
+import { Redirect } from 'react-router'
+
 
 
 const initialState = {firstname:'', lastname:'', email:'', password:'', confirmpassword : ''}
 
 let Admin = () => {
 
+    useEffect(() => {
+        if(!auth.authenticate){
+            dispatch(isUserLoggedIn())
+        }
+    }, [])
+
+    const dispatch = useDispatch();
+    const auth = useSelector( (state) =>
+            
+            state.Auth_root_reducer
+        
+    )
+
     
+        
     const [formData, setformData] = useState(initialState)
 
     const classes = useStyles()
@@ -33,12 +51,20 @@ let Admin = () => {
         
         if(isSignUp)
         {
-            console.log("formData", formData)
+            // console.log("formData", formData)
+            dispatch(signup_action(formData))
         }
         else{
-            console.log("formData", formData)
+            // console.log("formData", formData)
+            dispatch(login_action(formData))
+           
+           
         }
     }
+    if(auth.authenticate){
+        return <Redirect to={'/'} />
+    }
+    
 
     const handlechange = (e) => {
       

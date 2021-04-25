@@ -22,6 +22,13 @@ app.use(cors());
 app.options('*', cors());
 app.set('port', process.env.PORT || 5000);
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
 //to load static image in browser use below link
 const __dirname = path.resolve();
 
@@ -35,11 +42,6 @@ app.use('/product', ProductRouter);
 app.use('/cart', Cartrouter);
 
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
 
 
 mongoose.connect(process.env.CONNECTION_URL , {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex : true})
