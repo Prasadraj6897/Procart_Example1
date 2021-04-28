@@ -11,8 +11,9 @@ import Footer from '../Pages/Footer'
 import PrivateRoute from '../Hig_Ord_Comp/PrivateRoute'
 import {useDispatch, useSelector} from "react-redux"
 import { isUserLoggedIn } from "../../actions/auth.action";
-import Products from '../Pages/Products'
-import Orders from '../Pages/Orders'
+import Products from '../Pages/Products/Products'
+import Orders from '../Pages/Orders/Orders'
+import category from '../Pages/categories/categories'
 
 let Routers = () => {
     const dispatch = useDispatch();
@@ -44,9 +45,9 @@ let Routers = () => {
                     {/* <Route exact path='/laptops' component={Laptops} /> */}
                     <PrivateRoute exact path='/mobiles' component={Mobiles} />
                     {/* <Route exact path='/watches' component={Watches} /> */}
-                    <Route path='/products' component={Products} />
-                    <Route path='/orders' component={Orders} />
-
+                    <PrivateRoute path='/products' component={Products} />
+                    <PrivateRoute path='/orders' component={Orders} />
+                    <PrivateRoute path='/categories' component={category} />
                 </Switch>
                 <Footer />
             </Router>

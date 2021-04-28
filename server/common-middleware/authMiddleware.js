@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 // for only signin user must enter into project
 
 export const requiresignin = (req, res, next)=>{
-    // console.log("req.headers.authorization",req.headers.authorization)
+    // console.log("req.headers.authorization",req.headers)
     if(req.headers.authorization)
     {
         const token = req.headers.authorization.split(" ")[1];

@@ -143,7 +143,7 @@ let Admin = () => {
                             {isSignUp &&  <Input name="ConfirmPassword" label="Confirm Password" handlechange={handlechange} type= "password"/>}
                         </Grid>
 
-                        <Button type="submit" fullWidth variant="contained" color="inherit" className={classes.submit} > 
+                        <Button type="submit" fullWidth variant="contained" color="secondary" className={classes.submit} > 
                             {
                                 isSignUp ? 
                                 

@@ -21,7 +21,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import clsx from 'clsx';
-import Button from "@material-ui/core/Button/Button"
+
 import {useDispatch, useSelector} from "react-redux"
 import useStyles from "./css/SideNavStyles.js"
 
@@ -75,18 +75,28 @@ let NavBar = () => {
            
 
             {/* <CssBaseline /> */}
-
-            <Toolbar>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={handleDrawerOpen}
-                    edge="start"
-                    className={clsx(classes.menuButton, open && classes.hide)}
-                >
-                    <MenuIcon />
-                </IconButton>
-            </Toolbar>
+        {
+            Auth_token.token ? 
+                (
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                            className={clsx(classes.menuButton, open && classes.hide)}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    </Toolbar>
+                )
+            
+            :
+            
+            
+            ""
+        }
+           
 
             <Drawer
                 className={classes.drawer}
@@ -121,6 +131,14 @@ let NavBar = () => {
                                 <MailIcon />
                             </ListItemIcon>
                             <ListItemText primary="Ordered"/>
+                        </ListItem> 
+                    </Link>
+                    <Link to='/categories'>
+                        <ListItem  >
+                            <ListItemIcon>
+                                <MailIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Categories"/>
                         </ListItem> 
                     </Link>
                     
