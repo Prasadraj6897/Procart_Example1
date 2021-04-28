@@ -11,6 +11,8 @@ import Footer from '../Pages/Footer'
 import PrivateRoute from '../Hig_Ord_Comp/PrivateRoute'
 import {useDispatch, useSelector} from "react-redux"
 import { isUserLoggedIn } from "../../actions/auth.action";
+import Products from '../Pages/Products'
+import Orders from '../Pages/Orders'
 
 let Routers = () => {
     const dispatch = useDispatch();
@@ -21,8 +23,7 @@ let Routers = () => {
             
         
     )
-    const [authToken, setauthToken] = useState(auth)
-    
+   
 
     useEffect(() => {
         // setauthToken(auth)
@@ -36,13 +37,15 @@ let Routers = () => {
     return(
         <>
             <Router>
-                <Navbar AuthToken={authToken}/>
+                <Navbar />
                 <Switch>
                     <PrivateRoute exact path='/' component={HomePage} />
                     <Route exact path='/admin' component={Admin} />
                     {/* <Route exact path='/laptops' component={Laptops} /> */}
                     <PrivateRoute exact path='/mobiles' component={Mobiles} />
                     {/* <Route exact path='/watches' component={Watches} /> */}
+                    <Route path='/products' component={Products} />
+                    <Route path='/orders' component={Orders} />
 
                 </Switch>
                 <Footer />

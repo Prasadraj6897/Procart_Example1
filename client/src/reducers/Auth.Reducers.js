@@ -1,4 +1,4 @@
-import {SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,LOGOUT} from "../actions/auth.action"
+import {SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,LOGOUT_REQUEST, LOGOUT_FAILURE, LOGOUT_SUCCESS} from "../actions/auth.action"
 
 let initial_state  = {
     token: null,
@@ -10,6 +10,9 @@ let initial_state  = {
     },
     authenticate: false,
     authenticating: false,
+    loading: false,
+    error: null,
+    message: '',
    
 }
 
@@ -31,9 +34,13 @@ let auth_reducer = (state = initial_state, action) =>{
                 authenticate: true,
                 authenticating: false,
             }
-        case LOGOUT:
-            localStorage.clear();
-            return{ ...initial_state};
+        case LOGIN_FAILURE :    
+                           
+            return {
+                ...state,
+                error: action.payload.error,
+            }
+       
         
         case SIGNUP_REQUEST:           
             return {
@@ -53,6 +60,20 @@ let auth_reducer = (state = initial_state, action) =>{
                 ...state,
                 authenticating: false,
             }
+        case LOGOUT_REQUEST:
+            // localStorage.clear();
+            return{ ...state, loading :true};
+        case LOGOUT_SUCCESS:
+            
+            return{ ...initial_state};
+        case LOGOUT_FAILURE:
+           
+            return{ 
+                ...state,
+                error : action.payload.error,
+                loading: false
+            };
+        
         default:
             return state;
     }

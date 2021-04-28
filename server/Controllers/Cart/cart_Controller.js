@@ -56,7 +56,7 @@ export const createCart = async (req, res)=>{
                             
                             }
                             else{
-                                res.status(500).json({message: "You are selected wrong product"})
+                                return res.status(500).json({message: "You are selected wrong product"})
                                 
                             }
             
@@ -77,11 +77,11 @@ export const createCart = async (req, res)=>{
                             }
                             const result = await Cart.create(cartItem)
 
-                            res.status(200).json({result})
+                            return res.status(200).json({result})
 
                         }
                         else{
-                            res.status(500).json({message: "You are selected wrong product"})
+                            return res.status(500).json({message: "You are selected wrong product"})
                             
                         }
 

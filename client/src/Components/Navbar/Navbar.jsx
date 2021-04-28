@@ -60,11 +60,14 @@ let NavBar = () => {
         history.push('/admin')
 
     }
+    const handleSideBar = (e) => {
+        console.log(e)
+    }
  
 
   return (
     // <MDBContainer>      
-        <MDBNavbar color="secondary-color" dark expand="md" style={{height:'10%'}}>
+        <MDBNavbar color="secondary-color" position="fixed" dark expand="md" style={{height:'10%'}}>
             {/* <pre>{JSON.stringify(Auth_token.result)}</pre> */}
             {/* <pre>{JSON.stringify(AuthToken)}</pre> */}
             
@@ -103,12 +106,24 @@ let NavBar = () => {
                 <Divider />
 
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
+                    {/* component={() => <Link to='/mobiles' />} component={() => <Link to='/watches' />} */}
+                    <Link to='/products' >
+                        <ListItem >
+                            <ListItemIcon>
+                                <InboxIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Products"/>
+                        </ListItem> 
+                    </Link>
+                    <Link to='/watches'>
+                        <ListItem  >
+                            <ListItemIcon>
+                                <MailIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Ordered"/>
+                        </ListItem> 
+                    </Link>
+                    
                 </List>
 
                 <Divider />

@@ -29,7 +29,7 @@ export const createProduct = async (req, res)=>{
 
        const result = await Product.create(Productlist)
        
-       res.status(201).json({result})
+       return res.status(201).json({result})
     }
     catch(error){
        

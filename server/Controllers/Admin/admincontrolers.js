@@ -11,22 +11,26 @@ export const adminsignIn = async (req, res)=>{
     try{
         const existingUser = await Users.findOne({email})
         if(!existingUser){
-            res.status(404).json({message : "Admin doesn't Exist"})
+           return res.status(404).json({message : "Admin doesn't Exist"})
         }
 
         const isPasswordcorrect = await bcrypt.compare(password, existingUser.password)
 
         if(!isPasswordcorrect){
-            res.status(400).json({message : "Password doesn't Match"})
+            return res.status(400).json({message : "Password doesn't Match"})
         }
 
         if(existingUser.role != 'admin'){
-            res.status(400).json({message : "You have no access"})
+            return res.status(400).json({message : "You have no access"})
         }
 
         const token = jwt.sign({email: existingUser.email, id: existingUser._id, role: existingUser.role}, 'test', {expiresIn: "1h"})
 
-        res.status(200).json({result:existingUser, token})
+        //created cookie
+        res.cookie('token', token, {expiresIn: "1h"})
+
+
+        return res.status(200).json({result:existingUser, token})
 
     }
     catch(error){
@@ -45,11 +49,11 @@ export const adminsignUp = async (req, res)=>{
     try{
         const existingUser = await Users.findOne({email})
         if(existingUser){
-            res.status(400).json({message : "Admin already Exist"})
+            return res.status(400).json({message : "Admin already Exist"})
         }
         if(password != ConfirmPassword)
         {
-            res.status(400).json({message : "Passwords Doesn't match"})
+            return res.status(400).json({message : "Passwords Doesn't match"})
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
@@ -60,10 +64,15 @@ export const adminsignUp = async (req, res)=>{
 
         const token = jwt.sign({email: result.email, id: result._id}, 'test', {expiresIn: "1h"})
 
-        res.status(200).json({result, token})
+        return res.status(200).json({result, token})
     }
     catch(error){
        
         return res.status(400).json({message:error.message})
     }
+}
+
+export const adminsignout = (req, res) => {
+    res.clearCookie('token')
+    res.status(200).json({message: "Signout successfully"})
 }

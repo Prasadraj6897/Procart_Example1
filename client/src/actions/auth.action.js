@@ -7,7 +7,9 @@ const SIGNUP_FAILURE = "SIGNUP_FAILURE";
 const LOGIN_REQUEST = "LOGIN_REQUEST";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGIN_FAILURE = "LOGIN_FAILURE";
-const LOGOUT = "LOGOUT";
+const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 
 
 let signup_action = (userdata, history) => {
@@ -17,7 +19,7 @@ let signup_action = (userdata, history) => {
         try{
             
             dispatch({type : SIGNUP_REQUEST})
-            const res = await axiosInstance.post('/signup',{...userdata})
+            const res = await axiosInstance.post('/admin/signup',{...userdata})
            
             
             if(res.status === 200){
@@ -59,7 +61,7 @@ let login_action = (userdata) => {
         try{
                        
             dispatch({type : LOGIN_REQUEST})
-            const res = await axiosInstance.post('/signin',{...userdata})
+            const res = await axiosInstance.post('/admin/signin',{...userdata})
            
             
             if(res.status === 200){
@@ -129,13 +131,23 @@ let logout_action = () => {
     return async (dispatch) => {
         
         try{
+            dispatch({type : LOGOUT_REQUEST })
+            const res = await axiosInstance.post('/admin/signout')
+            if(res.status ===200 )
+            {
+                localStorage.clear();
+                dispatch({type : LOGOUT_SUCCESS })
+            }
+            else{
+                dispatch({type : LOGOUT_FAILURE,
+                            payload : res.data.error
+                })
+            }
             
-            
-            dispatch({type : LOGOUT})
         }catch(error){
 
         }
     } 
 }
 
-export {SIGNUP_REQUEST, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, SIGNUP_SUCCESS, SIGNUP_FAILURE, signup_action, login_action, isUserLoggedIn, logout_action}
+export {SIGNUP_REQUEST, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGOUT_SUCCESS, LOGOUT_FAILURE, signup_action, login_action, isUserLoggedIn, logout_action}

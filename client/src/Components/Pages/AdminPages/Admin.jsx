@@ -60,10 +60,12 @@ let Admin = () => {
     if(auth.authenticate){
         return <Redirect to={'/'} />
     }
-    if(auth.authenticating)
+    
+    if(auth.authenticating )
     {
         return(<p>Loading..!</p>)
     }
+   
     
 
     const handlechange = (e) => {

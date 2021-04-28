@@ -25,7 +25,7 @@ export const createCategory = async (req, res)=>{
 
        const result = await Category.create(categoryObj)
        
-       res.status(200).json({result})
+       return res.status(200).json({result})
     }
     catch(error){
        
@@ -47,7 +47,7 @@ export const getCategory = async (req, res)=>{
             {
                 // for getting sub category
                 const CategoryList = CreateCategories(Categ)
-                res.status(200).json({CategoryList})
+                return res.status(200).json({CategoryList})
             }
         })
         
