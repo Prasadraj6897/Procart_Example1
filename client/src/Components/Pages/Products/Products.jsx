@@ -1,5 +1,5 @@
 import React, {useState}from 'react'
-import {Container, Row, Col, Button, Modal } from 'react-bootstrap'
+import {Container, Row,Col,  Table, Button, Modal } from 'react-bootstrap'
 import {useDispatch, useSelector} from "react-redux"
 import TextField from '@material-ui/core/TextField';
 import { addProduct_action } from '../../../actions/product.action';
@@ -48,6 +48,10 @@ const Products = (props) => {
         state.category_root_reducer.categories
     )
 
+	const product = useSelector((state)=> 
+		state.product_root_reducer.products
+	)
+
   const createCategoryList = (categories, options =[]) => {
 	for(let category of categories)
 	{
@@ -67,6 +71,44 @@ const handleProductPictures = (e) => {
 	])
 }
 
+const renderProducts = () => {
+	return (
+		<Table responsive = 'sm'>
+			{/* <pre>{JSON.stringify(product)}</pre> */}
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th>Description</th>
+					<th>Category</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				{
+					product.length > 0 ? 
+						product.map(prod =>
+							<tr key={prod._id}>
+								<td>2</td>
+								<td>{prod.name}</td>
+								<td>{prod.price}</td>
+								<td>{prod.quantity}</td>
+								<td>{prod.description}</td>
+								<td>---</td>
+							</tr>
+							
+							)
+					:
+					null
+				}
+			</tbody>
+		</Table>
+
+	)
+}
+
   	return(
 		<Container>
 			<Row>
@@ -74,6 +116,12 @@ const handleProductPictures = (e) => {
 					ADD
 				</Button>
 			</Row> 
+
+			<Row>
+				<Col>
+					{renderProducts()}
+				</Col>
+			</Row>
 			
 				
 				<Modal show={show} onHide={handleClose}>

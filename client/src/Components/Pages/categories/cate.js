@@ -1,10 +1,9 @@
-import { Grid, Typography, Button} from '@material-ui/core'
+import { Grid, Container, Typography, Button, Modal} from '@material-ui/core'
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux"
 import { addCategory_action, get_category_action } from '../../../actions/category.action';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import {Container, Row, Col, Modal } from 'react-bootstrap'
 
 
 const Categories = () => {
@@ -25,14 +24,13 @@ const Categories = () => {
         },
       }));
       const classes = useStyles();
-      const [show, setShow] = useState(false);
+      const [open, setOpen] = useState(false);
       const [categoryName, setCategoryName] = useState('')
       const [parentCategoryId, setparentCategoryId] = useState('')
       const [CategoryImage, setCategoryImage] = useState('')
 
       const handleOpen = () => {
-        
-        setShow(true)
+        setOpen(true);
       };
     
       const handleClose = () => {
@@ -42,7 +40,7 @@ const Categories = () => {
         form.append('parentId', parentCategoryId);
         form.append('categoryImage',CategoryImage);
         dispatch(addCategory_action(form))
-        setShow(false)
+        setOpen(false);
 
         setCategoryName('');
         setparentCategoryId('');
@@ -66,7 +64,37 @@ const Categories = () => {
         setCategoryImage(e.target.files[0])
       }
 
-   
+     
+      const body = (
+        <div className={classes.paper}>
+          <h2 id="simple-modal-title">Add new Category</h2>
+          <TextField
+            label="Category Name"
+            variant="outlined"
+            value={categoryName}
+            onChange = {(e)=>setCategoryName(e.target.value)}
+            style={{marginBottom:10}}
+            fullWidth
+            />
+
+            <select className='form-control' value={parentCategoryId} onChange={(e)=>setparentCategoryId(e.target.value)}  style={{marginBottom:'15px'}}>
+                <option>Select Category</option>
+                {
+                    createCategoryList(category).map((option)=>
+                        <option key ={option.value} value={option.value}>{option.name}</option>
+                    )
+                }
+            </select>
+            <input type='file' name='categoryImage' onChange={handlecategoryImage}/>
+
+            <br></br>
+          <button type="button" onClick={handleClose}>
+               Add Category
+            </button>
+            
+        </div>
+      );
+
       
      const renderCategories = (category) => {
         let ALL_categories = []
@@ -102,7 +130,7 @@ const Categories = () => {
                     Categories
                 </Typography>
                 <Grid container justify="flex-end">
-                    <Button variant="contained" color="primary" onClick={handleOpen}>
+                    <Button variant="contained" color="secondary" onClick={handleOpen}>
                         Add
                     </Button>
                 </Grid>
@@ -115,40 +143,15 @@ const Categories = () => {
                 </ul>
             </Grid>
             
-            <Modal show={show} onHide={handleClose}>
-					<Modal.Header closeButton>
-						<Modal.Title>Add Category</Modal.Title>
-					</Modal.Header>
-					<Modal.Body >
-					<TextField
-                        label="Category Name"
-                        variant="outlined"
-                        value={categoryName}
-                        onChange = {(e)=>setCategoryName(e.target.value)}
-                        style={{marginBottom:10}}
-                        fullWidth
-                    />
-					<br></br>
-					<select className='form-control' value={parentCategoryId} onChange={(e)=>setparentCategoryId(e.target.value)}  style={{marginBottom:'15px'}}>
-                        <option>Select Category</option>
-                        {
-                            createCategoryList(category).map((option)=>
-                                <option key ={option.value} value={option.value}>{option.name}</option>
-                            )
-                        }
-                    </select>
-                    <input type='file' name='categoryImage' onChange={handlecategoryImage}/>
-
-					</Modal.Body>
-					<Modal.Footer>
-						<Button color="primary" onClick={handleClose}>
-							Close
-						</Button>
-						<Button color="secondary" onClick={handleClose}>
-							Save Changes
-						</Button>
-					</Modal.Footer>
-				</Modal>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >   
+                
+                {body}
+            </Modal>
 
         
         </Container>

@@ -14,6 +14,8 @@ import { isUserLoggedIn } from "../../actions/auth.action";
 import Products from '../Pages/Products/Products'
 import Orders from '../Pages/Orders/Orders'
 import category from '../Pages/categories/categories'
+import { get_category_action } from "../../actions/category.action";
+import {getInitialData_action} from '../../actions/initialData.action'
 
 let Routers = () => {
     const dispatch = useDispatch();
@@ -31,6 +33,7 @@ let Routers = () => {
         if(!auth.authenticate){
             dispatch(isUserLoggedIn())
         }
+        dispatch(getInitialData_action())
     }, [])
     
 

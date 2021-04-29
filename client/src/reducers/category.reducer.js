@@ -1,5 +1,5 @@
 import {GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE,CREATE_CATEGORIES_REQUEST, CREATE_CATEGORIES_SUCCESS, CREATE_CATEGORIES_FAILURE} from '../actions/category.action'
-
+import {GET_INITIAL_DATA_CATEGORIES_SUCCESS} from '../actions/initialData.action'
 const initState = {
     categories : [],
     loading: false,
@@ -9,13 +9,26 @@ const initState = {
 let buildNewCategories = (parentId, categories, category) => {
     let myCategories = [];
 
+    if(parentId == undefined)
+    {
+        return [
+            ...categories,
+            {
+                _id: category._id,
+                name: category.name,
+                slug: category.slug,
+                children:[]
+            }
+        ]
+    }
+
     for(let cat of categories)
     {
         if(cat._id == parentId)
         {
             myCategories.push({
                 ...cat,
-                children: cat.children && cat.children.length > 0 ? buildNewCategories(parentId,[...cat.children,{
+                children: cat.children ? buildNewCategories(parentId,[...cat.children,{
                     _id: category._id,
                     name: category.name,
                     slug: category.slug,
@@ -27,7 +40,7 @@ let buildNewCategories = (parentId, categories, category) => {
         else{
             myCategories.push({
                 ...cat,
-                children: cat.children && cat.children.length > 0 ? buildNewCategories(parentId,cat.children,category) : []
+                children: cat.children ? buildNewCategories(parentId,cat.children,category) : []
             })
         }
     }
@@ -44,6 +57,12 @@ let category_reducer = (state = initState, action) =>{
           
         case GET_CATEGORIES_SUCCESS :    
                            
+            return {
+                ...state,
+                categories: action.payload.category,
+                loading: false,
+            }
+        case GET_INITIAL_DATA_CATEGORIES_SUCCESS: 
             return {
                 ...state,
                 categories: action.payload.category,

@@ -63,4 +63,14 @@ export default makeStyles((theme) => ({
         display: 'none',
       },
     },
-  }));
+    footer: {
+      position: 'fixed',
+      left: 0,
+      bottom: 0,
+      width: '100%',
+      backgroundColor: 'purple',
+      color: 'white',
+      textAlign: 'center',
+    },
+  
+  }  ));

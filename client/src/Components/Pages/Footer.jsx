@@ -1,9 +1,11 @@
 import React from "react";
 import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
+import useStyles from  '../Navbar/css/RegStyles'
 
 const FooterPage = () => {
+    const classes = useStyles()
   return (
-        <MDBFooter color="purple" className="font-small pt-4 mt-4">
+        <MDBFooter color="purple" fixed='bottom' >
             <MDBContainer fluid className="text-center text-md-left">
                 <MDBRow>
                     <MDBCol md="6">

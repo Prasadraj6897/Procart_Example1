@@ -8,6 +8,7 @@ import AdminRouter from './Routers/Admin/adminuser.js'
 import CategoryRouter from './Routers/Category/Category.js'
 import ProductRouter from './Routers/Product/Product.js'
 import Cartrouter from './Routers/Cart/Cart.js'
+import InitialDataRouter from './Routers/Admin/iniialData.js'
 import * as path from 'path';
 
 const app = express();
@@ -40,6 +41,8 @@ app.use('/admin', AdminRouter);
 app.use('/category', CategoryRouter);
 app.use('/product', ProductRouter);
 app.use('/cart', Cartrouter);
+app.use('/data', InitialDataRouter);
+
 
 
 

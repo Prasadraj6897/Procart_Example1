@@ -67,7 +67,7 @@ let NavBar = () => {
 
   return (
     // <MDBContainer>      
-        <MDBNavbar color="secondary-color" position="fixed" dark expand="md" style={{height:'10%'}}>
+        <MDBNavbar color="secondary-color"  dark expand="sm" style={{height:'10%'}}>
             {/* <pre>{JSON.stringify(Auth_token.result)}</pre> */}
             {/* <pre>{JSON.stringify(AuthToken)}</pre> */}
             
