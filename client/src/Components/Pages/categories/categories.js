@@ -1,9 +1,8 @@
-import { Grid, Container, Typography, Button} from '@material-ui/core'
+import { Grid, Container, Typography, Button, Modal} from '@material-ui/core'
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux"
 import { addCategory_action, get_category_action } from '../../../actions/category.action';
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 
 
@@ -70,9 +69,11 @@ const Categories = () => {
             variant="outlined"
             value={categoryName}
             onChange = {(e)=>setCategoryName(e.target.value)}
+            style={{marginBottom:10}}
+            fullWidth
             />
 
-            <select className='form-control' value={parentCategoryId} onChange={(e)=>setparentCategoryId(e.target.value)}>
+            <select className='form-control' value={parentCategoryId} onChange={(e)=>setparentCategoryId(e.target.value)}  style={{marginBottom:'15px'}}>
                 <option>Select Category</option>
                 {
                     createCategoryList(category).map((option)=>

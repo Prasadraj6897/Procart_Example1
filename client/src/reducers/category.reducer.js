@@ -6,6 +6,34 @@ const initState = {
     error: null
 }
 
+let buildNewCategories = (parentId, categories, category) => {
+    let myCategories = [];
+
+    for(let cat of categories)
+    {
+        if(cat._id == parentId)
+        {
+            myCategories.push({
+                ...cat,
+                children: cat.children && cat.children.length > 0 ? buildNewCategories(parentId,[...cat.children,{
+                    _id: category._id,
+                    name: category.name,
+                    slug: category.slug,
+                    parentId: category.parentId,
+                    children: category.children
+                }],category) : []
+            })
+        }
+        else{
+            myCategories.push({
+                ...cat,
+                children: cat.children && cat.children.length > 0 ? buildNewCategories(parentId,cat.children,category) : []
+            })
+        }
+    }
+    return myCategories;
+}
+
 let category_reducer = (state = initState, action) =>{
     switch(action.type){
         case GET_CATEGORIES_REQUEST :           
@@ -35,9 +63,10 @@ let category_reducer = (state = initState, action) =>{
             }
           
         case CREATE_CATEGORIES_SUCCESS :    
-                           
+            const updatedCategory = buildNewCategories(action.payload.category.parentId, state.categories, action.payload.category)
             return {
                 ...state,
+                categories: updatedCategory,
                 loading: false,
             }
         case CREATE_CATEGORIES_FAILURE :    

@@ -78,6 +78,7 @@ function CreateCategories (CategoryfromResult, parentId = null){
             _id: categ._id,
             name: categ.name,
             slug: categ.slug,
+            parentId: categ.parentId,
             children: CreateCategories(CategoryfromResult, categ._id),
         })
     }
