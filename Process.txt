@@ -95,3 +95,5 @@ mongodb+srv://Prasad_Database:<password>@cluster0.1qfop.mongodb.net/myFirstDatab
 
 17.Error : Reducer "category_root_reducer" returned undefined during initialization. If the state passed to the reducer is undefined, you must explicitly return the initial state. The initial state may not be undefined. If you don't want to set a value for this reducer, you can use null instead of undefined.
 		if it comes see default in reducers.
+
+18. &nbsp;

@@ -6,12 +6,14 @@ import './style.css'
 
 const MenuHeader = () => {
 
-    const category = useSelector(state => state.category_root_reducer.categories)
-    const dispatch = useDispatch();
-    
     useEffect(() => {
         dispatch(get_category_action())
     }, [])
+    
+    const category = useSelector(state => state.category_root_reducer.categories)
+    const dispatch = useDispatch();
+    
+    
 
     const renderCategories = (category) => {
         let ALL_categories = []

@@ -1,12 +1,14 @@
 import React from 'react'
-import Header from '../Headers/Headers'
-import MenuHeader from '../MenuHeader/MenuHeader'
+
+import Layout from '../Layout/Layout'
+
 
 let HomePage = () => {
     return(
         <div>
-            <Header />
-            <MenuHeader />
+            < Layout>
+                HomePage
+            </Layout>
         </div>
     )
 }

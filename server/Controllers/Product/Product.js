@@ -1,6 +1,6 @@
 import Product from '../../Models/Product.js'
 import slugify from 'slugify'
-
+import Category from '../../Models/Category.js'
 
 
 
@@ -34,5 +34,58 @@ export const createProduct = async (req, res)=>{
     catch(error){
        
        return res.status(500).json({message : error})
+    }
+}
+
+export const getProductsBySlug =  async (req, res)=>{
+   
+    const {slug} = req.params
+    // console.log(req.params)
+    
+    try{
+        Category.findOne({slug:slug})
+        .select('_id')
+        .exec((error, category) => {
+            if(error)
+            {
+                return res.status(500).json({message : error})
+            }
+            if(category)
+            {
+                Product.find({category: category._id})
+                .exec((error, products) => {
+
+                if(products.length > 0)
+                {
+                    return res.status(200).json({products,
+                        ProductPrice: {
+                            under5k: products.filter(product=> product.price <= 5000),
+                            under10k: products.filter(product=> product.price > 5000 && product.price <= 10000),
+                            under15k: products.filter(product=> product.price > 10000 && product.price <= 15000),
+                            under20k: products.filter(product=> product.price > 15000 && product.price <= 20000),
+                            under25k: products.filter(product=> product.price > 20000 && product.price <= 25000),
+                            under30k: products.filter(product=> product.price > 25000 && product.price <= 30000),
+                            above50k: products.filter(product=> product.price > 50000 && product.price <= 100000),
+                            above100k: products.filter(product=> product.price >= 100000),
+                           
+                        }
+                    
+                    
+                    })
+                }
+                if(error)
+                {
+                    return res.status(500).json({message : error})
+                }
+                
+
+                })
+            }
+        })
+        
+        
+    }
+    catch(error){
+
     }
 }
