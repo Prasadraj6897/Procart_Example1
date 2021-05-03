@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 import Users from '../../Models/Users.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import shortid from 'shortid'
 // import {validationResult} from "express-validator"
 
 
@@ -58,7 +59,7 @@ export const adminsignUp = async (req, res)=>{
 
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        const result = await Users.create({ firstName, lastName, email, password: hashedPassword, ConfirmPassword, userName: Math.random().toString(), role:'admin'})
+        const result = await Users.create({ firstName, lastName, email, password: hashedPassword, ConfirmPassword, userName: shortid.generate(), role:'admin'})
 
         // may remove await below
 
