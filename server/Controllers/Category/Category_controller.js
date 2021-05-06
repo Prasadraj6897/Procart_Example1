@@ -1,6 +1,6 @@
 import Category from '../../Models/Category.js'
 import slugify from 'slugify'
-
+import shortid from 'shortid'
 
 // import CreateCategories from '../CategoryList/CategoryList.js'
 
@@ -11,7 +11,7 @@ export const createCategory = async (req, res)=>{
         
        const categoryObj = {
            name: req.body.name,
-           slug: slugify(req.body.name),
+           slug: `${slugify(req.body.name)}-${shortid.generate()}`,
            
        }
        if(req.file){
@@ -129,4 +129,28 @@ export const updateCategories = async (req, res) => {
 
 
      
+}
+
+
+export const deleteCategories = async (req, res) => {
+
+    const {ids} = req.body;
+    const deletedCategories = [];
+    for(let i =0 ; i < ids.length; i++)
+    {
+        // console.log(ids[i]._id)
+        const deleteCategory = await Category.findOneAndDelete({_id: ids[i]._id});
+        
+        deletedCategories.push(deleteCategory)
+    }
+    if(deletedCategories.length == ids.length)
+    {
+        res.status(200).json({message : "Categories Removed"});
+    }
+    else
+    {
+        res.status(400).json({message : "Something Went Wrong"});
+    }
+    //  res.status(200).json({message : ids});
+    
 }

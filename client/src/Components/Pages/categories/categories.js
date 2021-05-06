@@ -1,7 +1,7 @@
 import { Grid, Typography, Button} from '@material-ui/core'
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux"
-import { addCategory_action, get_category_action, UpdateCategory_action } from '../../../actions/category.action';
+import { addCategory_action, DeleteCategory_action, get_category_action, UpdateCategory_action } from '../../../actions/category.action';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import {Container, Row, Col, Modal } from 'react-bootstrap'
@@ -41,6 +41,7 @@ const Categories = () => {
       const [checkedArray, setCheckedArray] = useState([])
       const [expandedArray, setExpandedArray] = useState([])
 
+      const [deleteCategoryModal, setdeleteCategoryModal] = useState(false);
        
 
       const [updateCategoryModal, setupdateCategoryModal] = useState(false)
@@ -110,25 +111,28 @@ const Categories = () => {
     }
 
     const handleupdateCategoryModal = () => {
-       const categories =  createCategoryList(category)
-       const checkArray = [];
-       const expandArray = [];  
-       checked.length > 0 && checked.forEach((categoryId, index) => {
-           const category = categories.find((category, _index) => categoryId == category.value)
-           category && checkArray.push(category)
-       })
-       setCheckedArray(checkArray)
-
-       expanded.length > 0 && expanded.forEach((categoryId, index) => {
-            const category = categories.find((category, _index) => categoryId == category.value)
-            category && expandArray.push(category)
-        })
-        setExpandedArray(expandArray)
-
+      
+        CheckedAndExpandedCategories();
         setupdateCategoryModal(true)
-        console.log({checkArray, expandArray})
+        // console.log({checkArray, expandArray})
     }
   
+    const CheckedAndExpandedCategories = () => {
+        const categories =  createCategoryList(category)
+        const checkArray = [];
+        const expandArray = [];  
+        checked.length > 0 && checked.forEach((categoryId, index) => {
+            const category = categories.find((category, _index) => categoryId == category.value)
+            category && checkArray.push(category)
+        })
+        setCheckedArray(checkArray)
+ 
+        expanded.length > 0 && expanded.forEach((categoryId, index) => {
+             const category = categories.find((category, _index) => categoryId == category.value)
+             category && expandArray.push(category)
+         })
+         setExpandedArray(expandArray)
+    }
     const handleUpdateSave = () =>{
 
         const form = new FormData();
@@ -170,6 +174,69 @@ const Categories = () => {
             setExpandedArray(updatedExpandedArray)
         }
     }
+    
+    const CloseDeleteModal = () =>
+    {
+        setdeleteCategoryModal(false)
+    }
+
+    const handleDelete = () =>{
+        const checked_IDS_Array = checkedArray.map((item, index) => ({_id: item.value}));
+        const expanded_IDS_Array = expandedArray.map((item, index) => ({_id: item.value}));
+        const idsArray = expanded_IDS_Array.concat(checked_IDS_Array)
+
+        dispatch(DeleteCategory_action(idsArray))
+        .then( result =>
+            {
+                if(result)
+                {
+                    dispatch(get_category_action())
+                }
+            })
+        
+        setdeleteCategoryModal(false)
+    }
+
+    const handleDeleteCategoryModal = () => {
+        CheckedAndExpandedCategories();
+        setdeleteCategoryModal(true)
+    }
+
+    const renderDeleteCategoryModal = () => {
+        return(
+            <Modal show={deleteCategoryModal} onHide={CloseDeleteModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete Category</Modal.Title>
+                </Modal.Header>
+                
+                <Modal.Body >
+                    <h6>Expanded</h6>
+                    {
+                        expandedArray.map((item, index) => <span key={index}>{item.name}</span>)
+                    }
+                    <h6>Checked</h6>
+                    {
+                        checkedArray.map((item, index) => <span key={index}>{item.name}</span>)
+                    }
+                    
+
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="contained" color="primary" onClick={CloseDeleteModal}>
+                        Close
+                    </Button>&nbsp;
+                    <Button variant="contained" color="secondary" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+
+
+        )
+    }
+
 
 
   return(
@@ -203,7 +270,7 @@ const Categories = () => {
             <Row>
                 <Col>
                     <Button color="primary" variant="contained" onClick={handleupdateCategoryModal}> Update </Button>&nbsp;
-                    <Button variant="contained" color="secondary" > Delete </Button>
+                    <Button variant="contained" color="secondary" onClick={handleDeleteCategoryModal}> Delete </Button>
                 </Col>
             </Row>
             
@@ -364,6 +431,12 @@ const Categories = () => {
                         </Modal.Footer>
                 </Modal>
                 </Grid>
+                <Row>
+                    <Col>
+                        {renderDeleteCategoryModal()}
+                    </Col>
+                </Row>
+
                     {/* Finished */}
         </Container>
 
