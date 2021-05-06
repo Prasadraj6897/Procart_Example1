@@ -85,4 +85,42 @@ const addCategory_action = (form) => {
    
 }
 
-export {get_category_action, addCategory_action, GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE, CREATE_CATEGORIES_REQUEST, CREATE_CATEGORIES_SUCCESS, CREATE_CATEGORIES_FAILURE};
+const UpdateCategory_action = (form) => {
+    return async (dispatch) => {
+       try{
+        // dispatch({
+        //     type:CREATE_CATEGORIES_REQUEST,
+        // })
+        const res = await axiosInstance.post('/category/updateCategory', form)
+        console.log("res.data", res.data)
+        if(res.status == 200)
+        {
+            return true;
+            // dispatch({
+            //     type:CREATE_CATEGORIES_SUCCESS,
+            //     payload: {
+            //         category: res.data.result
+            //     }
+            // })
+        }
+        else{
+            // dispatch({
+            //     type:CREATE_CATEGORIES_FAILURE,
+            //     payload: 
+            //     {
+            //         error: res.data.error
+            //     }
+            // })
+        }
+       } 
+       catch(error)
+       {
+          
+       }
+       
+
+    }
+   
+}
+
+export {get_category_action, addCategory_action, UpdateCategory_action, GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE, CREATE_CATEGORIES_REQUEST, CREATE_CATEGORIES_SUCCESS, CREATE_CATEGORIES_FAILURE};

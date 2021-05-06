@@ -97,3 +97,7 @@ mongodb+srv://Prasad_Database:<password>@cluster0.1qfop.mongodb.net/myFirstDatab
 		if it comes see default in reducers.
 
 18. &nbsp;
+19. installed react-checkbox-tree
+20. if npm error occurs  npm audit-fix --force
+
+21. add this for icons (<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">)

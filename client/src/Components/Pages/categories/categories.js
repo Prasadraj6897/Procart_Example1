@@ -1,7 +1,7 @@
 import { Grid, Typography, Button} from '@material-ui/core'
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux"
-import { addCategory_action, get_category_action } from '../../../actions/category.action';
+import { addCategory_action, get_category_action, UpdateCategory_action } from '../../../actions/category.action';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import {Container, Row, Col, Modal } from 'react-bootstrap'
@@ -130,9 +130,34 @@ const Categories = () => {
     }
   
     const handleUpdateSave = () =>{
-        
+
+        const form = new FormData();
+
+        expandedArray.forEach((item, index) => {
+            form.append('name', item.name);
+            form.append('parentId', item.parentId ? item.parentId : "");
+            form.append('_id',item.value);
+            form.append('type', item.type);
+        })
+
+        checkedArray.forEach((item, index) => {
+            form.append('name', item.name);
+            form.append('parentId', item.parentId ? item.parentId : "");
+            form.append('_id',item.value);
+            form.append('type', item.type);
+        })
+
+        dispatch(UpdateCategory_action(form))
+        .then( result =>
+            {
+                if(result)
+                {
+                    dispatch(get_category_action())
+                }
+            })
         setupdateCategoryModal(false)
     }
+    
     const handleCategoryInput = (key, value, index, type) => {
         if(type=='checked')
         {

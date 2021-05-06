@@ -1,6 +1,6 @@
 import express from "express"
 
-import {createCategory, getCategory} from '../../Controllers/Category/Category_controller.js'
+import {createCategory, getCategory, updateCategories} from '../../Controllers/Category/Category_controller.js'
 import {requiresignin, adminMiddleware} from "../../common-middleware/authMiddleware.js"
 
 import multer from 'multer'
@@ -25,5 +25,6 @@ const upload = multer({storage})
 
 router.post('/createCategory', requiresignin, adminMiddleware, upload.single('categoryImage'), createCategory)
 router.get('/getCategory',   getCategory)
+router.post('/updateCategory', upload.array('categoryImage'), updateCategories)
 
 export default router;
