@@ -155,13 +155,7 @@ const Categories = () => {
         })
 
         dispatch(UpdateCategory_action(form))
-        .then( result =>
-            {
-                if(result)
-                {
-                    dispatch(get_category_action())
-                }
-            })
+        
         setupdateCategoryModal(false)
     }
     
@@ -191,14 +185,7 @@ const Categories = () => {
         if(checked_IDS_Array.length > 0)
         {
             dispatch(DeleteCategory_action(checked_IDS_Array))
-            .then( result =>
-                {
-                    if(result)
-                    {
-                        dispatch(get_category_action())
-                    }
-                })
-            
+                        
             setdeleteCategoryModal(false)
         }
        

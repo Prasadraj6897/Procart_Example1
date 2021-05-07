@@ -12,7 +12,7 @@ export const requiresignin = (req, res, next)=>{
 
     }
     else{
-        return res.status(400).json({message:"Authorization Denied"})
+        return res.status(500).json({message:"Authorization Denied"})
     }
     
     next();
@@ -23,7 +23,7 @@ export const userMiddleware = (req, res, next)=>{
 
     if(req.user.role !== 'user')
     {
-        return res.status(400).json({message:"User Access Denied"})
+        return res.status(500).json({message:"User Access Denied"})
     }
     next();
 
@@ -34,7 +34,7 @@ export const adminMiddleware = (req, res, next)=>{
     
     if(req.user.role !== 'admin')
     {
-        return res.status(400).json({message:"Admin Access Denied"})
+        return res.status(500).json({message:"Admin Access Denied"})
     }
     next();
 

@@ -8,6 +8,14 @@ const CREATE_CATEGORIES_REQUEST = "CREATE_CATEGORIES_REQUEST";
 const CREATE_CATEGORIES_SUCCESS = "CREATE_CATEGORIES_SUCCESS";
 const CREATE_CATEGORIES_FAILURE = "CREATE_CATEGORIES_FAILURE";
 
+const UPDATE_CATEGORIES_REQUEST = "UPDATE_CATEGORIES_REQUEST";
+const UPDATE_CATEGORIES_SUCCESS = "UPDATE_CATEGORIES_SUCCESS";
+const UPDATE_CATEGORIES_FAILURE = "UPDATE_CATEGORIES_FAILURE";
+
+const DELETE_CATEGORIES_REQUEST = "DELETE_CATEGORIES_REQUEST";
+const DELETE_CATEGORIES_SUCCESS = "DELETE_CATEGORIES_SUCCESS";
+const DELETE_CATEGORIES_FAILURE = "DELETE_CATEGORIES_FAILURE";
+
 
 let get_category_action = () => {
     
@@ -88,29 +96,30 @@ const addCategory_action = (form) => {
 const UpdateCategory_action = (form) => {
     return async (dispatch) => {
        try{
-        // dispatch({
-        //     type:CREATE_CATEGORIES_REQUEST,
-        // })
+        dispatch({
+            type:UPDATE_CATEGORIES_REQUEST,
+        })
         const res = await axiosInstance.post('/category/updateCategory', form)
         console.log("res.data", res.data)
         if(res.status == 200)
         {
-            return true;
-            // dispatch({
-            //     type:CREATE_CATEGORIES_SUCCESS,
-            //     payload: {
-            //         category: res.data.result
-            //     }
-            // })
+            
+            dispatch({
+                type:UPDATE_CATEGORIES_SUCCESS,
+                // payload: {
+                //     category: res.data.result
+                // }
+            })
+            dispatch(get_category_action())
         }
         else{
-            // dispatch({
-            //     type:CREATE_CATEGORIES_FAILURE,
-            //     payload: 
-            //     {
-            //         error: res.data.error
-            //     }
-            // })
+            dispatch({
+                type:UPDATE_CATEGORIES_FAILURE,
+                payload: 
+                {
+                    error: res.data.error
+                }
+            })
         }
        } 
        catch(error)
@@ -127,31 +136,29 @@ const DeleteCategory_action = (ids) => {
     // console.log("datadadatay", ids)
     return async (dispatch) => {
        try{
-        // dispatch({
-        //     type:CREATE_CATEGORIES_REQUEST,
-        // })
+        dispatch({
+            type:DELETE_CATEGORIES_REQUEST,
+        })
         const res = await axiosInstance.post('/category/deleteCategory', {ids})
         
        
         if(res.status == 200)
         {
-            return true;
-            // dispatch({
-            //     type:CREATE_CATEGORIES_SUCCESS,
-            //     payload: {
-            //         category: res.data.result
-            //     }
-            // })
+            
+            dispatch({
+                type:DELETE_CATEGORIES_SUCCESS,
+                
+            })
+            dispatch(get_category_action())
         }
         else{
-            return false;
-            // dispatch({
-            //     type:CREATE_CATEGORIES_FAILURE,
-            //     payload: 
-            //     {
-            //         error: res.data.error
-            //     }
-            // })
+            dispatch({
+                type:DELETE_CATEGORIES_FAILURE,
+                payload: 
+                {
+                    error: res.data.error
+                }
+            })
         }
        } 
        catch(error)
@@ -165,4 +172,9 @@ const DeleteCategory_action = (ids) => {
 }
 
 
-export {get_category_action, addCategory_action, UpdateCategory_action, DeleteCategory_action, GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE, CREATE_CATEGORIES_REQUEST, CREATE_CATEGORIES_SUCCESS, CREATE_CATEGORIES_FAILURE};
+export {get_category_action, addCategory_action, UpdateCategory_action, DeleteCategory_action, GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE, CREATE_CATEGORIES_REQUEST, CREATE_CATEGORIES_SUCCESS, CREATE_CATEGORIES_FAILURE,
+    UPDATE_CATEGORIES_REQUEST, UPDATE_CATEGORIES_SUCCESS, UPDATE_CATEGORIES_FAILURE,
+    DELETE_CATEGORIES_REQUEST, DELETE_CATEGORIES_SUCCESS, DELETE_CATEGORIES_FAILURE
+
+
+};

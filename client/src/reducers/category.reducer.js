@@ -1,4 +1,8 @@
-import {GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE,CREATE_CATEGORIES_REQUEST, CREATE_CATEGORIES_SUCCESS, CREATE_CATEGORIES_FAILURE} from '../actions/category.action'
+import {GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE,CREATE_CATEGORIES_REQUEST, CREATE_CATEGORIES_SUCCESS, CREATE_CATEGORIES_FAILURE,
+    UPDATE_CATEGORIES_REQUEST, UPDATE_CATEGORIES_SUCCESS, UPDATE_CATEGORIES_FAILURE,
+    DELETE_CATEGORIES_REQUEST, DELETE_CATEGORIES_SUCCESS, DELETE_CATEGORIES_FAILURE
+
+} from '../actions/category.action'
 import {GET_INITIAL_DATA_CATEGORIES_SUCCESS} from '../actions/initialData.action'
 const initState = {
     categories : [],
@@ -95,6 +99,51 @@ let category_reducer = (state = initState, action) =>{
                 ...state,
                 error: action.payload.error,
             }
+
+        // Update Categories
+
+        case UPDATE_CATEGORIES_REQUEST :           
+            return {
+                ...state,
+                loading: true,
+            }
+          
+        case UPDATE_CATEGORIES_SUCCESS :    
+                           
+            return {
+                ...state,
+                // categories: action.payload.category,
+                loading: false,
+            }
+        case UPDATE_CATEGORIES_FAILURE :    
+                           
+            return {
+                ...state,
+                error: action.payload.error,
+            }
+
+            // Delete Categories
+
+        case DELETE_CATEGORIES_REQUEST :           
+            return {
+                ...state,
+                loading: true,
+            }
+          
+        case DELETE_CATEGORIES_SUCCESS :    
+                           
+            return {
+                ...state,
+                
+                loading: false,
+            }
+        case DELETE_CATEGORIES_FAILURE :    
+                           
+            return {
+                ...state,
+                error: action.payload.error,
+            }
+
         default:
             return state;
     }

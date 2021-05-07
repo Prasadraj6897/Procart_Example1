@@ -65,7 +65,8 @@ let auth_reducer = (state = initial_state, action) =>{
             return{ ...state, loading :true};
         case LOGOUT_SUCCESS:
             
-            return{ ...initial_state};
+            return{ ...initial_state,
+                loading: false};
         case LOGOUT_FAILURE:
            
             return{ 
