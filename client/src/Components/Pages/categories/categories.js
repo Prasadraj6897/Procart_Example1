@@ -5,12 +5,15 @@ import { addCategory_action, DeleteCategory_action, get_category_action, UpdateC
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import {Container, Row, Col, Modal } from 'react-bootstrap'
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 //added new library
 import CheckboxTree from 'react-checkbox-tree'
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 // import '../../../../node_modules/react-checkbox-tree/lib/index'
-
+import './style.css'
 
 const Categories = () => {
 
@@ -185,16 +188,20 @@ const Categories = () => {
         const expanded_IDS_Array = expandedArray.map((item, index) => ({_id: item.value}));
         const idsArray = expanded_IDS_Array.concat(checked_IDS_Array)
 
-        dispatch(DeleteCategory_action(idsArray))
-        .then( result =>
-            {
-                if(result)
+        if(checked_IDS_Array.length > 0)
+        {
+            dispatch(DeleteCategory_action(checked_IDS_Array))
+            .then( result =>
                 {
-                    dispatch(get_category_action())
-                }
-            })
-        
-        setdeleteCategoryModal(false)
+                    if(result)
+                    {
+                        dispatch(get_category_action())
+                    }
+                })
+            
+            setdeleteCategoryModal(false)
+        }
+       
     }
 
     const handleDeleteCategoryModal = () => {
@@ -247,9 +254,17 @@ const Categories = () => {
                     Categories
                 </Typography>
                 <Grid container justify="flex-end">
-                    <Button variant="contained" color="primary" onClick={handleOpen}>
-                        Add
-                    </Button>
+                   
+                    <Row>
+                        <Col className= "actionbtnContainer">
+                            <span>Action: </span>
+                            <Button variant="contained" color="primary" onClick={handleOpen}>
+                                   <AddIcon /> <span>Add</span>
+                            </Button>
+                            <Button color="primary" variant="contained" onClick={handleupdateCategoryModal}><EditIcon /> <span>Update</span>   </Button>
+                            <Button variant="contained" color="secondary" onClick={handleDeleteCategoryModal}><DeleteIcon /> <span>Delete</span>  </Button>
+                        </Col>
+                    </Row>
                 </Grid>
 
             </Grid>
@@ -267,12 +282,7 @@ const Categories = () => {
                 />
             </Grid>
 
-            <Row>
-                <Col>
-                    <Button color="primary" variant="contained" onClick={handleupdateCategoryModal}> Update </Button>&nbsp;
-                    <Button variant="contained" color="secondary" onClick={handleDeleteCategoryModal}> Delete </Button>
-                </Col>
-            </Row>
+           
             
                 <Modal show={show} onHide={handleCloseModal}>
                         <Modal.Header closeButton>
