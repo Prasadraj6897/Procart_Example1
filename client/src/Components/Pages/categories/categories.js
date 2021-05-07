@@ -82,7 +82,11 @@ const Categories = () => {
       const createCategoryList = (categories, options =[]) => {
           for(let category of categories)
           {
-              options.push({value: category._id, name: category.name, parentId: category.parentId})
+              options.push({value: category._id,
+                 name: category.name, 
+                 parentId: category.parentId,
+                type: category.type
+                })
               if(category.children.length > 0)
               {
                 createCategoryList(category.children, options)
@@ -349,7 +353,10 @@ const Categories = () => {
                                     </Col>
 
                                     <Col>
-                                        <select className='form-control'>
+                                        <select className='form-control'
+                                            value={item.type}
+                                            onChange={(e)=>handleCategoryInput('type', e.target.value, index, 'expanded')}
+                                        >
                                             <option value="">Select Type</option>
                                             <option value="store">Store</option>
                                             <option value="product">Product</option>
@@ -399,7 +406,10 @@ const Categories = () => {
                                     </Col>
 
                                     <Col>
-                                        <select className='form-control'>
+                                        <select className='form-control'
+                                         value={item.type}
+                                         onChange={(e)=>handleCategoryInput('type', e.target.value, index, 'checked')}
+                                        >
                                             <option value="">Select Type</option>
                                             <option value="store">Store</option>
                                             <option value="product">Product</option>

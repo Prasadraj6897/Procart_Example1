@@ -117,7 +117,16 @@ let NavBar = () => {
 
                 <List>
                     {/* component={() => <Link to='/mobiles' />} component={() => <Link to='/watches' />} */}
-                    <Link to='/products' >
+                    <Link to='/page' onClick={handleDrawerClose}>
+                        <ListItem  >
+                            <ListItemIcon>
+                                <MailIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Page"/>
+                        </ListItem> 
+                    </Link>
+
+                    <Link to='/products' onClick={handleDrawerClose}>
                         <ListItem >
                             <ListItemIcon>
                                 <InboxIcon />
@@ -125,7 +134,7 @@ let NavBar = () => {
                             <ListItemText primary="Products"/>
                         </ListItem> 
                     </Link>
-                    <Link to='/watches'>
+                    <Link to='/orders' onClick={handleDrawerClose}>
                         <ListItem  >
                             <ListItemIcon>
                                 <MailIcon />
@@ -133,7 +142,7 @@ let NavBar = () => {
                             <ListItemText primary="Ordered"/>
                         </ListItem> 
                     </Link>
-                    <Link to='/categories'>
+                    <Link to='/categories' onClick={handleDrawerClose}>
                         <ListItem  >
                             <ListItemIcon>
                                 <MailIcon />

@@ -16,6 +16,8 @@ import Orders from '../Pages/Orders/Orders'
 import category from '../Pages/categories/categories'
 import { get_category_action } from "../../actions/category.action";
 import {getInitialData_action} from '../../actions/initialData.action'
+import NewPage from "../AdminPages/Pages";
+
 
 let Routers = () => {
     const dispatch = useDispatch();
@@ -45,6 +47,7 @@ let Routers = () => {
                 <Switch>
                     <PrivateRoute exact path='/' component={HomePage} />
                     <Route exact path='/admin' component={Admin} />
+                    <PrivateRoute path='/page' component={NewPage} />
                     {/* <Route exact path='/laptops' component={Laptops} /> */}
                     <PrivateRoute exact path='/mobiles' component={Mobiles} />
                     {/* <Route exact path='/watches' component={Watches} /> */}
