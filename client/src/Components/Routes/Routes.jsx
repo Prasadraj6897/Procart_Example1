@@ -35,8 +35,11 @@ let Routers = () => {
         if(!auth.authenticate){
             dispatch(isUserLoggedIn())
         }
-        dispatch(getInitialData_action())
-    }, [])
+        if(auth.authenticate){
+            dispatch(getInitialData_action())
+        }
+        
+    }, [auth.authenticate])
     
 
 

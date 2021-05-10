@@ -1,5 +1,25 @@
 import jwt from 'jsonwebtoken'
 
+import multer from 'multer'
+import shortid from 'shortid'
+import * as path from 'path';
+
+const __dirname = path.resolve();
+
+//below is for destination for uploading files 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, path.join(path.dirname(__dirname), '/server/uploads'))
+    },
+    filename: function (req, file, cb) {
+      cb(null, shortid.generate() + '-' + file.originalname)
+    }
+  })
+
+const upload = multer({storage})
+ 
+export default upload;
+
 // for only signin user must enter into project
 
 export const requiresignin = (req, res, next)=>{

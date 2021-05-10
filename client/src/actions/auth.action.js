@@ -133,7 +133,7 @@ let logout_action = () => {
         try{
             dispatch({type : LOGOUT_REQUEST })
             const res = await axiosInstance.post('/admin/signout')
-            console.log("resresresresres",res)
+            
             localStorage.clear();
             if(res.status ==200 )
             {
