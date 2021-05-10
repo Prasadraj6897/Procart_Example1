@@ -70,6 +70,12 @@ const NewPage = (props) => {
         dispatch(create_page_action(form))
 
         setCreateModal(false);
+        setTitle('');
+        setDescription('');
+        setType('')
+        setCategoryId('');
+        setBanner([]);
+        setProducts([])
     }
     
     // 
