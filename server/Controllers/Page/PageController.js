@@ -19,8 +19,8 @@ export const createPage = async (req, res)=>{
         {
             
             req.body.products =  products.map((product, index) => ({
-                    img : `${process.env.API}/public/${sdsfsfsdf}`,
-                    navigateTo: `/productClicked?categoryId=${sdfsdfdsfsdf}&type=${sdfsdfsdf}`,
+                    img : `${process.env.API}/public/${product.filename}`,
+                    navigateTo: `/productClicked?categoryId=${req.body.category}&type=${req.body.type}`,
                 }))
             
         }
