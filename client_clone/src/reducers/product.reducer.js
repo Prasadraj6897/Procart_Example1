@@ -1,4 +1,4 @@
-import { Product_constants } from "../actions/constants"
+import { Product_constants, Page_constants } from "../actions/constants"
 
 const initState = {
     products:[],
@@ -11,10 +11,13 @@ const initState = {
         under30k: [],
         above50k: [],
         above100k: [],
-    }
+    },
+    pageRequest: false,
+    page:{}
 }
 
 export default (state = initState, action) => {
+    console.log("action.payloadaction.payload",action.payload)
     switch(action.type)
     {
         case Product_constants.GET_PRODUCT_SLUG:
@@ -24,6 +27,29 @@ export default (state = initState, action) => {
                 productByPrice: {
                     ...action.payload.productByPrice
                 }
+            }
+            break;
+
+        case Page_constants.GET_PRODUCT_PAGE_REQUEST:
+            state = {
+                ...state,
+                pageRequest:true,
+               
+            }
+            break;
+        case Page_constants.GET_PRODUCT_PAGE_SUCCESS:
+            // console.log(action.payload.pages)
+            state = {
+                ...state,
+                page:action.payload.pages,
+                pageRequest:false,
+            }
+            break;
+        case Page_constants.GET_PRODUCT_PAGE_FAILURE:
+            state = {
+                ...state,
+                error:action.payload.error,
+                pageRequest:true,
             }
         break ;
     }

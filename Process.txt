@@ -101,3 +101,4 @@ mongodb+srv://Prasad_Database:<password>@cluster0.1qfop.mongodb.net/myFirstDatab
 20. if npm error occurs  npm audit-fix --force
 
 21. add this for icons (<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">)
+22. if error occur in map funtion see whether sample.map(()=>  dont put curly after   )

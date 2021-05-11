@@ -23,7 +23,7 @@ const MenuHeader = () => {
             <li key = {categ._id}>
                 {
                     //slug in here for /elec /mob
-                    categ.parentId ? <a href={categ.slug}>{categ.name}</a> 
+                    categ.parentId ? <a href={`${categ.slug}?cid=${categ._id}&type=${categ.type}`}>{categ.name}</a> 
                         :
                     <span>{categ.name}</span>
 

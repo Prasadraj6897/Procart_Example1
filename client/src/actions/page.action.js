@@ -13,9 +13,9 @@ let create_page_action = (form) => {
         try{
             dispatch({type : CREATE_PAGE_REQUEST })
             const res = await axiosInstance.post('/page/createPage', form)
-            // console.log(res)
+            console.log(res)
            
-            if(res.status ==200 )
+            if(res.status ==201 )
             {
                
                 dispatch({

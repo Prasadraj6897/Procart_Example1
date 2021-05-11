@@ -1,17 +1,19 @@
 import express from "express"
-import {createPage} from '../../Controllers/Page/PageController.js'
+import {createPage, getPage} from '../../Controllers/Page/PageController.js'
 import upload, { requiresignin, adminMiddleware } from '../../common-middleware/authMiddleware.js'
 
 const router = express.Router();
 
 
-router.post('/createPage', upload.fields([
+router.post('/createPage', requiresignin, adminMiddleware, upload.fields([
     {
         name: 'banners'
     },
     {
         name: 'products'
     }
-]), requiresignin, adminMiddleware ,createPage)
+]) ,createPage)
+
+router.get(`/:category/:type`, getPage);
 
 export default router;
