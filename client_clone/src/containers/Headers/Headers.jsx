@@ -10,14 +10,94 @@ import {
   DropdownMenu
 } from '../MaterialUi_Layout/UI_Layout'
 import './style.css'
-
+import { useDispatch } from 'react-redux';
+import { isUserLoggedIn, login_action, logout_action } from '../../actions/auth.action';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router'
 
 const Header = (props) => {
 
 	const [loginModal, setLoginModal] = useState(false);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	
+	const dispatch = useDispatch()
+	const auth = useSelector(state => state.Auth_root_reducer)
+
+	const handleLogin = () =>{
+		const form = new FormData();
+		form.append('email', email);
+		form.append('password', password);
+
+		// console.log(form)
+		dispatch(login_action({email, password}))
+		setLoginModal(false)
+		setEmail('');
+		setPassword('');
+	}
+
+	const handleLogout = () =>{
+		dispatch(logout_action())
+	}
+
+	//componentDidUpdate
+	useEffect(()=>{
+		if(auth.authenticate)
+			dispatch(isUserLoggedIn)
+	},[auth.authenticate])
+
+	const renderLoggedInMenu = () => {
+		return(
+			<DropdownMenu
+			  menu={
+				<a className="userName" style={{color:"white"}}>
+				  {auth.result.firstName}&nbsp;{auth.result.lastName}
+				</a>
+			  }
+			  menus={[
+				{ label: 'My Profile', href: '', icon: null },
+				{ label: 'Super Coin Zone', href: '', icon: null },
+				{ label: 'Flipkart Plus Zone', href: '', icon: null },
+				{ label: 'Orders', href: '', icon: null },
+				{ label: 'Wishlist', href: '', icon: null },
+				{ label: 'My Chats', href: '', icon: null },
+				{ label: 'Coupons', href: '', icon: null },
+				{ label: 'Rewards', href: '', icon: null },
+				{ label: 'Notification', href: '', icon: null },
+				{ label: 'Gift Cards', href: '', icon: null },
+				{ label: 'Logout', href: '', icon: null, onClick:handleLogout },
+			  ]}
+			  
+			/>
+		)
+	}
+  
+	const renderNonLoggedInMenu = () => {
+		return(
+			<DropdownMenu
+			  menu={
+				<a className="loginButton" onClick={() => setLoginModal(true)}>
+				  Login
+				</a>
+			  }
+			  menus={[
+				{ label: 'My Profile', href: '', icon: null },
+				{ label: 'Flipkart Plus Zone', href: '', icon: null },
+				{ label: 'Orders', href: '', icon: null },
+				{ label: 'Wishlist', href: '', icon: null },
+				{ label: 'Rewards', href: '', icon: null },
+				{ label: 'Gift Cards', href: '', icon: null },
+			  ]}
+			  firstMenu={
+				<div className="firstmenu">
+				  <span>New Customer?</span>
+				  <a style={{ color: '#2874f0' }}>Sign Up</a>
+				</div>
+			  }
+			/>
+		)
+	}
   
 	return (
 	  <div className="header">
@@ -46,12 +126,26 @@ const Header = (props) => {
 					label="Enter Password"
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
-					rightElement={<a href="#">Forgot?</a>}
+					// rightElement={<a href="#">Forgot?</a>}
 				  />
 				  <MaterialButton 
 					title="Login"
 					bgColor="#fb641b"
 					textColor="#ffffff"
+					style={{
+						margin: '20px 0 20px 0'
+					}}
+					onClick ={handleLogin}
+				  />
+				  <p>OR</p>
+
+				  <MaterialButton 
+					title="Request OTP"
+					bgColor="#ffffff"
+					textColor="#2874f0"
+					style={{
+						margin: '20px 0'
+					}}
 				  />
   
 				
@@ -62,9 +156,9 @@ const Header = (props) => {
 		</Modal>
 		<div className="subHeader">
 		  <div className="logo">
-			<a href="">
+			<Link to="/">
 			  <img src={flipkartLogo} className="logoimage" alt="" />
-			</a>
+			</Link>
 			<a style={{ marginTop: '-10px' }}>
 			  <span className="exploreText">Explore</span>
 			  <span className="plusText">Plus</span>
@@ -88,30 +182,19 @@ const Header = (props) => {
 			</div>
 		  </div>
 		  <div className="rightMenu">
+			{
+				!auth.authenticate
+				?
+					renderNonLoggedInMenu()
+				:
+					renderLoggedInMenu()
+			}
+
+
+
 			<DropdownMenu
 			  menu={
-				<a className="loginButton" onClick={() => setLoginModal(true)}>
-				  Login
-				</a>
-			  }
-			  menus={[
-				{ label: 'My Profile', href: '', icon: null },
-				{ label: 'Flipkart Plus Zone', href: '', icon: null },
-				{ label: 'Orders', href: '', icon: null },
-				{ label: 'Wishlist', href: '', icon: null },
-				{ label: 'Rewards', href: '', icon: null },
-				{ label: 'Gift Cards', href: '', icon: null },
-			  ]}
-			  firstMenu={
-				<div className="firstmenu">
-				  <span>New Customer?</span>
-				  <a style={{ color: '#2874f0' }}>Sign Up</a>
-				</div>
-			  }
-			/>
-			<DropdownMenu
-			  menu={
-				<a className="more">
+				<a className="more" style={{color:"white"}}>
 				  <span>More</span>
 				  <IoIosArrowDown />
 				</a>
@@ -125,7 +208,7 @@ const Header = (props) => {
 			  ]}
 			/>
 			<div>
-			  <a className="cart">
+			  <a className="cart" style={{color:"white"}}>
 				<IoIosCart />
 				<span style={{ margin: '0 10px' }}>Cart</span>
 			  </a>

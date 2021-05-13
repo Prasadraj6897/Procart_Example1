@@ -83,11 +83,20 @@
   }
 .more {
     font-weight: bold;
-    color: #fff;
+    color: #ffffff;
     display: flex;
     align-items: center;
     margin: 0 20px;
     cursor: pointer;
+  }
+ .userName{
+    font-weight: bold;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+    cursor: pointer;
+  
   }
 .cart {
     font-weight: bold;

@@ -13,7 +13,9 @@ const initState = {
         above100k: [],
     },
     pageRequest: false,
-    page:{}
+    page:{},
+    loading:false,
+    productDetails:{}
 }
 
 export default (state = initState, action) => {
@@ -50,6 +52,29 @@ export default (state = initState, action) => {
                 ...state,
                 error:action.payload.error,
                 pageRequest:true,
+            }
+        break ;
+
+        case Product_constants.GET_PRODUCT_DETAILS_BY_ID_REQUEST:
+            state = {
+                ...state,
+                loading:true,
+               
+            }
+            break;
+        case Product_constants.GET_PRODUCT_DETAILS_BY_ID_SUCCESS:
+            // console.log(action.payload.pages)
+            state = {
+                ...state,
+                productDetails:action.payload.productDetails,
+                loading:false,
+            }
+            break;
+        case Product_constants.GET_PRODUCT_PAGE_FAILURE:
+            state = {
+                ...state,
+                error:action.payload.error,
+                loading:true,
             }
         break ;
     }

@@ -89,3 +89,29 @@ export const getProductsBySlug =  async (req, res)=>{
 
     }
 }
+
+export const getProductDetailsBySlug =  async (req, res)=>{
+   
+    const {ProductId} = req.params
+    // console.log(req)
+    
+    try{
+        if(ProductId)
+        {
+            Product.findOne({_id:ProductId})
+            .exec((error, product)=>{
+                if(error)
+                {
+                    return res.status(400).json({message : error})
+                }
+                if(product)
+                {
+                    return res.status(200).json({product})
+                }
+            })
+        }
+    }
+    catch(error){
+        return res.status(400).json({message : error})
+    }
+}

@@ -1,5 +1,6 @@
 import React,{useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
+import { Link } from 'react-router-dom'
 import { get_category_action } from '../../actions/category.action'
 import './style.css'
 
@@ -23,7 +24,7 @@ const MenuHeader = () => {
             <li key = {categ._id}>
                 {
                     //slug in here for /elec /mob
-                    categ.parentId ? <a href={`${categ.slug}?cid=${categ._id}&type=${categ.type}`}>{categ.name}</a> 
+                    categ.parentId ? <Link to={`${categ.slug}?cid=${categ._id}&type=${categ.type}`}>{categ.name}</Link> 
                         :
                     <span>{categ.name}</span>
 

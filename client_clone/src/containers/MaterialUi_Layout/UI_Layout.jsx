@@ -55,10 +55,21 @@ const MaterialInput = (props) => {
 }
 
 const MaterialButton = (props) => {
+
+    const onClick = () =>{
+        props.onClick && props.onClick();
+    }
     return (
-        <div style={{ width: '90%' }}>
+        <div style={{ width: '90%', ...props.style,
+                       
+        }}>
             <button
                 className="materialButton"
+                style={{
+                    backgroundColor: props.bgColor,
+                    color: props.textColor
+                }}
+                onClick={onClick}
             >
                 {props.title && props.title}
             </button>
@@ -104,12 +115,12 @@ const MaterialButton = (props) => {
                                             props.menus.map((item, index) => (
                                             <li key={index}>
                                             <a
-                                                //   onClick={(e) => {
-                                                //     if (item.onClick) {
-                                            //       e.preventDefault();
-                                                //       item.onClick && item.onClick();
-                                            //     }
-                                            //   }}
+                                                  onClick={(e) => {
+                                                    if (item.onClick) {
+                                                  e.preventDefault();
+                                                      item.onClick && item.onClick();
+                                                }
+                                              }}
                                                 href={`${item.href}`}
                                             >
                                                 {item.label}

@@ -4,7 +4,7 @@ import { getProductsBySlug } from '../../../actions/Product.action'
 import './style.css'
 import { generatePubliUrl } from '../../../urlConfig'
 import { useState } from 'react'
-
+import { Link } from 'react-router-dom';
 /**
 * @author
 * @function Product_Store
@@ -46,7 +46,7 @@ const Product_Store = (props) => {
                                     <div style={{display:'flex'}}>
                                         {
                                             product.ProductPrice[key].map(product =>
-                                                <div className='productContainer'>
+                                                <Link to={`/${product.slug}/${product._id}/p`} className='productContainer' style={{display:'block'}}>
                                                     <div className='productImgContainer'>
                                                         <img src ={generatePubliUrl(product.productPictures[0].img)} alt="sample"/>
                                                     </div>
@@ -58,7 +58,7 @@ const Product_Store = (props) => {
                                                         </div>
                                                         <div className="productPrice">{product.price}</div>
                                                     </div>
-                                                </div>
+                                                </Link>
 
                                             )
                                         }
