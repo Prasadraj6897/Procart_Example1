@@ -70,7 +70,9 @@ const MaterialButton = (props) => {
                     color: props.textColor
                 }}
                 onClick={onClick}
+
             >
+                {props.icon && props.icon}
                 {props.title && props.title}
             </button>
         </div>
