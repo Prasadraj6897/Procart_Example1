@@ -1,51 +1,60 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import Layout from '../Layout/Layout'
 import {useDispatch, useSelector} from 'react-redux'
 import Card from '../UI/Card/card'
 import './style.css'
+import CartItems from './CartItems/CartItems'
+import { addTocart_actions } from '../../actions/cart.actions'
 
 const Cart = (props) =>{
 
     const cart = useSelector(state => state.Cart_root_reducer.cartItems)
 
+    const[cartItem, setcartItem] = useState(cart)
+    const dispatch = useDispatch()
+
+    useEffect(()=> {
+        setcartItem(cart)
+    },[cart])
+    const onQuantityIncrement = (_id, qty) =>{
+        const {name, price, img} = cartItem[_id]
+        dispatch(addTocart_actions({_id, name, price, img}, 1))
+    }
+    const onQuantityDecrement = (_id, qty) => {
+        const {name, price, img} = cartItem[_id]
+        dispatch(addTocart_actions({_id, name, price, img}, -1))
+    }
 
     return(
         <Layout>
             {/* <pre>{JSON.stringify(cart)}</pre> */}
-            <div className="cartContainer">
+            <div className="cartContainer" style={{
+                alignItems:'flex-start'
+            }}>
                 <Card
                     headerleft={`My cart`}
                     headerright={` Deliver To`}
                 >
                     {
                         Object.keys(cart).map((key, index) => 
-                            <div key={index} className="flexRow">
-                            
-                                <div className="cartProductContainer">
-                                    <img src="" />
-                                </div>
-
-                                <div className="cartItemDetails">
-                                    <div>
-                                       {cart[key].name}
-                                    </div>
-                                    <div>
-                                        Delivery in 3 - 5 days
-                                    </div>
-                                </div>
-
-                            </div>
+                            <CartItems
+                                key={index}
+                                cartItem={cart[key]}
+                                onQuantityInc={onQuantityIncrement}
+                                onQuantityDec={onQuantityDecrement}
+                            />
                         )
                     }
 
                     
                 </Card>
                 <Card
+                    headerleft="Price"
                     style={{
                         width:'500px'
                     }}
                 >
-                    Price
+                    
                 </Card>
 
             </div>

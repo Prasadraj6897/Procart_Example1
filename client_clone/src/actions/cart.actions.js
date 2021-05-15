@@ -1,14 +1,14 @@
 import {cartConstants} from '../actions/constants.js'
 import {store} from '../store/store.js'
 
-export const addTocart_actions = (product) => {
+export const addTocart_actions = (product, newQty=1) => {
     return async dispatch => {
         const {cartItems} = store.getState().Cart_root_reducer;
        
         // console.log("produtsprodutsproduts", cartItems)
         // // const product = action.pa
 
-        const qty = cartItems[product._id] ? parseInt(cartItems[product._id].qty +1) : 1;
+        const qty = cartItems[product._id] ? parseInt(cartItems[product._id].qty + newQty) : 1;
         cartItems[product._id] = {
             ...product,
             qty
