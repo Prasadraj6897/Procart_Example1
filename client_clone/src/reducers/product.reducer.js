@@ -19,7 +19,7 @@ const initState = {
 }
 
 export default (state = initState, action) => {
-    console.log("action.payloadaction.payload",action.payload)
+    // console.log("action.payloadaction.payload",action.payload)
     switch(action.type)
     {
         case Product_constants.GET_PRODUCT_SLUG:

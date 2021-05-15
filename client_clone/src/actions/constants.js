@@ -27,3 +27,8 @@ export const authConstants = {
     SIGNUP_SUCCESS : "SIGNUP_SUCCESS",
     SIGNUP_FAILURE : "SIGNUP_FAILURE",
 }
+
+export const cartConstants = {
+    ADD_TO_CART : "ADD_TO_CART",
+
+}

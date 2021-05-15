@@ -3,6 +3,7 @@
     background: #fff;
     border: 1pc solid #cecece;
     box-shadow: 0 0 2px 2px #cecece;
+    /* width: calc(100% - 20px); */
 }
 .cardHeader {
     display: flex;

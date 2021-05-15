@@ -13,6 +13,7 @@ import './style.css';
 import { MaterialButton } from '../../MaterialUi_Layout/UI_Layout'
 import { generatePubliUrl } from '../../../urlConfig';
 import {Container, Row, Col} from 'react-bootstrap';
+import { addTocart_actions } from '../../../actions/cart.actions';
 
 
 /**
@@ -73,6 +74,15 @@ const ProductDetails = (props) => {
                                 marginBottom:'5px'
                                 }}
                                 icon={<IoMdCart />}
+                                onClick = {() => {
+                                    const {_id, name, price} = product;
+                                    const img = product.productPictures[0].img
+                                    dispatch(addTocart_actions({
+                                        _id, name, price, img
+                                    }))
+                                    props.history.push(`/cart`)
+                                }}
+                                
                             />
                             <MaterialButton
                                 title="BUY NOW"

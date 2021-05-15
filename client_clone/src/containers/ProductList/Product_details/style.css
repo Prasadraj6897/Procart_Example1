@@ -1,3 +1,9 @@
+.cartContainer{
+    display: flex;
+    max-width: 1260px;
+    margin: 15px auto;
+    justify-content: space-between;
+}
 .productDescriptionContainer{
     display: flex;
     box-sizing: border-box;
