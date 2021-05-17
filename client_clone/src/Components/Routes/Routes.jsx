@@ -24,7 +24,7 @@ let Routers = () => {
 
     useEffect(() => {
         dispatch(updatecart_actions())
-    }, [])
+    }, [auth.authenticate])
 
     return(
         <>

@@ -13,7 +13,7 @@ import './style.css';
 import { MaterialButton } from '../../MaterialUi_Layout/UI_Layout'
 import { generatePubliUrl } from '../../../urlConfig';
 import {Container, Row, Col} from 'react-bootstrap';
-import { addTocart_actions } from '../../../actions/cart.actions';
+import { addTocart_actions, getCartItem_actions } from '../../../actions/cart.actions';
 
 
 /**
@@ -80,6 +80,7 @@ const ProductDetails = (props) => {
                                     dispatch(addTocart_actions({
                                         _id, name, price, img
                                     }))
+                                    // dispatch(getCartItem_actions())
                                     props.history.push(`/cart`)
                                 }}
                                 

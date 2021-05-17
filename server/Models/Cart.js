@@ -11,7 +11,7 @@ const cartSchema = mongoose.Schema({
     cartItems:[
         {
             // below is linking in mongodb connecting user database like foreign key
-            Product: {
+            product: {
                 type : mongoose.Schema.Types.ObjectId, ref:'Product',
                 required: true, 
             },
@@ -19,10 +19,10 @@ const cartSchema = mongoose.Schema({
                 type: Number,
                 default: 1
             },
-            price:{
-                type: Number,
-                required: true,
-            },
+            // price:{
+            //     type: Number,
+            //     required: true,
+            // },
         }
     ]
 
