@@ -211,7 +211,10 @@ const Header = (props) => {
 			<div>
 			  <a className="cart" style={{color:"white"}}>
 				<IoIosCart />
-				<span style={{ margin: '0 10px' }}>Cart</span>
+				<Link to='/cart'>
+					<span style={{ margin: '0 10px', color:'white'}}>Cart</span>
+				</Link>
+				
 			  </a>
 			</div>
 		  </div>

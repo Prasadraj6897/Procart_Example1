@@ -46,13 +46,17 @@ const AddressForm = (props) => {
 			}
 		}
 		dispatch(addAddress_action(payload))
+		props.onSubmitForm();
+	}
+	const oncancel =() =>{
+		props.oncancel()
 	}
 
   return(
     	<div className="checkoutStep" style={{background: '#f5faff'}}>
 			<div className="checkoutHeader">
 				<div>
-					<span className="stepNumber">+</span>
+					{/* <span className="stepNumber">+</span> */}
 					<span className="stepTitle">{'Add New Address'}</span>
 				</div>
 			</div>
@@ -156,6 +160,15 @@ const AddressForm = (props) => {
 					<MaterialButton
 						title="Save and Deliver Here"
 						onClick={onAddressSubmit}
+						style={{
+							width:'250px',
+							margin:'20px 10px'
+						}}
+					/>
+
+					<MaterialButton
+						title="Cancel"
+						onClick={oncancel}
 						style={{
 							width:'250px',
 							margin:'20px 0'

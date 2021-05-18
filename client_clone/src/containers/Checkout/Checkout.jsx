@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Layout from '../Layout/Layout'
 import Card from '../UI/Card/card'
 import {useDispatch, useSelector} from 'react-redux'
-import {MaterialButton} from '../MaterialUi_Layout/UI_Layout'
+import {MaterialButton, MaterialInput} from '../MaterialUi_Layout/UI_Layout'
 import AddressForm from '../AddressForm/AddressForm'
 
 
@@ -16,7 +16,7 @@ import { getAddress_action } from '../../actions/address.action'
 const CheckoutStep = (props) => {
 	return(
 		<div className="checkoutStep">
-			<div className={`checkoutHeader ${props.active && 'active'}`}>
+			<div onClick={props.onClick} className={`checkoutHeader ${props.active && 'active'}`}>
 				<div>
 					<span className="stepNumber">{props.stepNumber}</span>
 					<span className="stepTitle">{props.title}</span>
@@ -31,15 +31,42 @@ const Checkout = (props) => {
 
   const auth = useSelector(state => state.Auth_root_reducer)
   const address = useSelector(state => state.Address_root_reducer.address)
+
+  const[newAddress, setNewAddress] = useState(false)
+  const[confirmAddress, setconfirmAddress] = useState(false)
+  const[selectedAddress, setselectedAddress] = useState(null)
+  const[addre, setAddre]= useState([])
+
   const dispatch = useDispatch()
 
   const onAddressSubmit = () => {
-
+	setNewAddress(false)
+  }
+  const handleCancel = () =>{
+	setNewAddress(false)
   }
 
+  const selectSpecificAddress = (addr) => {
+		const updatedAddress = addre.map(adr => adr._id === addr._id ? {...adr, selected:true} : {...adr, selected:false})
+		setAddre(updatedAddress)
+	}	
+	const confirmDeleivery = (addr) => {
+		setselectedAddress(addr)
+		setconfirmAddress(true)
+	}
+
   useEffect(()=>{
-    dispatch(getAddress_action())
-  }, [])
+	auth.authenticate && dispatch(getAddress_action())
+  }, [auth.authenticate])
+
+  useEffect(()=>{
+	const Eff_Address = address.map(adr =>({
+		...adr, 
+		selected: false,
+		edit: false
+	}))
+	setAddre(Eff_Address)
+  },[address])
   
   return(
       <Layout>
@@ -52,9 +79,16 @@ const Checkout = (props) => {
 						title={'login'}
 						active={!auth.authenticate}
 						body={
-							<div className="loggedIn">
-								<span style={{fontWeight:500}}>{auth.result.firstName}&nbsp;{auth.result.lastName}</span>
-								<span style={{margin:'0 5px'}}>{auth.result.email}</span>
+							auth.authenticate ?
+								<div className="loggedIn">
+									<span style={{fontWeight:500}}>{auth.result.firstName}&nbsp;{auth.result.lastName}</span>
+									<span style={{margin:'0 5px'}}>{auth.result.email}</span>
+								</div>
+							:
+							<div>
+								<MaterialInput
+									label="Email"
+								/>
 							</div>
 						}
 					/>
@@ -62,49 +96,76 @@ const Checkout = (props) => {
 					<CheckoutStep
 						stepNumber={'2'}
 						title={'Delivery Address'}
-						active={false}
+						active={!confirmAddress}
 						body={
 							<>
 								{
-									address.map(adr => 
-										<div className="flexRow addressContainer">
-											<div>
-												<input name="address" type="radio" />
-											</div>
-											<div className="flexRow sb addressinfo">
+									confirmAddress ? JSON.stringify(selectedAddress)
+									:
+									auth.authenticate ?
+										addre.map(adr => 
+											<div className="flexRow addressContainer">
 												<div>
+													<input name="address" type="radio" onClick={() => selectSpecificAddress(adr)}/>
+												</div>
+												<div className="flexRow sb addressinfo">
 													<div>
-														<span>{adr.name}</span>
-														<span>{adr.addressType}</span>
-														<span>{adr.mobileNumber}</span>
-													</div>
-													<div>
-														{adr.address}
-													</div>
-													<MaterialButton
-														title="Delivery Here"
-														style={{
-															width: '250px'
-														}}
+														<div>
+															<span>{adr.name}</span>
+															<span>{adr.addressType}</span>
+															<span>{adr.mobileNumber}</span>
+														</div>
+														<div>
+															{adr.address}
+														</div>
+														{
+															adr.selected && <MaterialButton
+																				title="Delivery Here"
+																				style={{
+																					width: '250px'
+																				}}
+																				onClick={()=>confirmDeleivery(adr)}
 
-													/>
-												</div>
-												<div>
-													Edit
+														/>
+
+														}
+														
+													</div>
+													<div>
+														{
+															adr.selected && <div> Edit </div>
+														}
+													</div>
 												</div>
 											</div>
-										</div>
-									
-									)
+										
+										)
+									:
+									null
 								}
 							</>
 						}
 					/>
 					{/* Address Form */}
-					<AddressForm
-						onSubmitForm={onAddressSubmit}
-						onCancel={()=>{}}
-					/>
+						{ confirmAddress ? null :
+							<CheckoutStep
+								title={'Add New Address'}
+								stepNumber={'+'}
+								active={newAddress}
+								onClick={()=>{setNewAddress(true)} }
+								body={
+									newAddress ?
+										<AddressForm
+											onSubmitForm={onAddressSubmit}
+											oncancel={handleCancel}
+										/>
+									:
+										null
+									}
+								
+							/>
+						}
+														
 
 					<CheckoutStep
 						stepNumber={'3'}
