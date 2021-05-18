@@ -1,8 +1,8 @@
 .card{
     width:100%;
     background: #fff;
-    border: 1pc solid #cecece;
-    box-shadow: 0 0 2px 2px #cecece;
+    /* border: 1pc solid #cecece; */
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px 0px !important;
     /* width: calc(100% - 20px); */
 }
 .cardHeader {
