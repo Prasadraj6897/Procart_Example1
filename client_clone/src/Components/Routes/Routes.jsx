@@ -33,10 +33,11 @@ let Routers = () => {
                 {/* <Navbar /> */}
                 <Switch>
                     <Route path='/' exact component={HomePage} />
-                    <Route exact path='/cart'  component={Cart} />
+                    <Route  path = '/checkout' component={Checkout} />
+                    <Route  path='/cart'  component={Cart} />
                     <Route exact path='/:Productslug/:ProductId/p'  component={ProductDetails} />
                     <Route exact path='/:slug'  component={ProductList} />
-                    <Route path = '/checkout' component={Checkout} />
+                    
                 </Switch>
                 {/* <Footer /> */}
             </Router>

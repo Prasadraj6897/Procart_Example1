@@ -4,3 +4,12 @@
     margin: 15px auto;
     justify-content: space-between;
 }
+.PlaceOrderBtnContainer{
+    width: 100%;
+    display: flex;
+    background: #ffffff;
+    justify-content: flex-end;
+    box-shadow: 0 0 10px 10px #eee;
+    padding: 10px 0;
+    box-sizing: border-box;
+}

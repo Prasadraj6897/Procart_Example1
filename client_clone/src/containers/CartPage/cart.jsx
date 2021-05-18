@@ -5,6 +5,7 @@ import Card from '../UI/Card/card'
 import './style.css'
 import CartItems from './CartItems/CartItems'
 import { addTocart_actions, getCartItem_actions } from '../../actions/cart.actions'
+import {MaterialButton} from '../MaterialUi_Layout/UI_Layout'
 
 const Cart = (props) =>{
 
@@ -45,6 +46,7 @@ const Cart = (props) =>{
                 <Card
                     headerleft={`My cart`}
                     headerright={` Deliver To`}
+                    style={{width: 'calc(100% - 400px)', overflow: 'hidden'}}
                 >
                     {
                         Object.keys(cart).map((key, index) => 
@@ -57,12 +59,21 @@ const Cart = (props) =>{
                         )
                     }
 
+                    <div className="PlaceOrderBtnContainer">
+                        <div style={{width:'250px'}}>
+                            <MaterialButton
+                                title="Place Order"
+                                onClick={()=>props.history.push('/checkout')}
+                            />
+                        </div>
+                    </div>
+
                     
                 </Card>
                 <Card
                     headerleft="Price"
                     style={{
-                        width:'500px'
+                        width:'380px'
                     }}
                 >
                     
