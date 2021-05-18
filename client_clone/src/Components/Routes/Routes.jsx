@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import { isUserLoggedIn } from "../../actions/auth.action";
 import { updatecart_actions } from "../../actions/cart.actions";
 import Cart from "../../containers/CartPage/cart";
+import Checkout from "../../containers/Checkout/Checkout";
 
 import HomePage from '../../containers/HomePage/HomePages'
 import ProductList from "../../containers/ProductList/ProdectList";
@@ -35,7 +36,7 @@ let Routers = () => {
                     <Route exact path='/cart'  component={Cart} />
                     <Route exact path='/:Productslug/:ProductId/p'  component={ProductDetails} />
                     <Route exact path='/:slug'  component={ProductList} />
-                    
+                    <Route path = '/checkout' component={Checkout} />
                 </Switch>
                 {/* <Footer /> */}
             </Router>

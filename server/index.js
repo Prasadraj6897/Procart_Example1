@@ -10,6 +10,8 @@ import ProductRouter from './Routers/Product/Product.js'
 import Cartrouter from './Routers/Cart/Cart.js'
 import InitialDataRouter from './Routers/Admin/iniialData.js'
 import PageRouter from './Routers/Page/Page.js'
+import AddressRouter from './Routers/Address/Address.js'
+
 import * as path from 'path';
 
 const app = express();
@@ -44,6 +46,7 @@ app.use('/product', ProductRouter);
 app.use('/cart', Cartrouter);
 app.use('/data', InitialDataRouter);
 app.use('/page', PageRouter);
+app.use('/address', AddressRouter);
 
 
 
