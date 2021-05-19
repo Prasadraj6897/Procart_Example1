@@ -11,6 +11,7 @@ import Cartrouter from './Routers/Cart/Cart.js'
 import InitialDataRouter from './Routers/Admin/iniialData.js'
 import PageRouter from './Routers/Page/Page.js'
 import AddressRouter from './Routers/Address/Address.js'
+import OrderRouter from './Routers/Orders/Orders.js'
 
 import * as path from 'path';
 
@@ -47,6 +48,7 @@ app.use('/cart', Cartrouter);
 app.use('/data', InitialDataRouter);
 app.use('/page', PageRouter);
 app.use('/address', AddressRouter);
+app.use('/order', OrderRouter);
 
 
 

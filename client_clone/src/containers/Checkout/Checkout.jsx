@@ -11,6 +11,7 @@ import { getAddress_action } from '../../actions/address.action'
 import PriceDetails from '../PriceDetails/PriceDetails'
 import { getCartItem_actions } from '../../actions/cart.actions'
 import Cart from '../CartPage/cart'
+import { addOrder_action } from '../../actions/order.action'
 /**
 * @author
 * @function Checkout
@@ -40,8 +41,11 @@ const Checkout = (props) => {
   const[confirmAddress, setconfirmAddress] = useState(false)
   const[selectedAddress, setselectedAddress] = useState(null)
   const[addre, setAddre]= useState([])
-
+  const[orderConfirmation, setorderConfirmation] = useState(false)
   const [orderSummary, setorderSummary] = useState(false)
+  const [fullorderSummary, setfullorderSummary] = useState(false)
+  const [PaymentOption, setPaymentOption] = useState(false)
+  const[confirmOrder, setconfirmOrder] = useState(false)
 
 
   const dispatch = useDispatch()
@@ -51,6 +55,7 @@ const Checkout = (props) => {
 	setNewAddress(false)
 	setconfirmAddress(true)
 	setorderSummary(true)
+	setfullorderSummary(true)
   }
   const handleCancel = () =>{
 	setNewAddress(false)
@@ -70,7 +75,42 @@ const Checkout = (props) => {
 		setselectedAddress(addr)
 		setconfirmAddress(true)
 		setorderSummary(true)
+		setfullorderSummary(true)
 	}
+	const confirmOrderbtn = () => {
+		setorderConfirmation(true)
+		setorderSummary(false)
+		setPaymentOption(true)
+	}
+	const onConfirmOrder =() => {
+		const  totalAmount = Object.keys(cart).reduce((totalPrice, key)=>
+									{
+										const {price, qty} = cart[key]
+										return totalPrice + price * qty;
+									}, 0
+								)
+		
+		const items = Object.keys(cart).map(key =>(
+			{
+				productId: key,
+				payablePrice: cart[key].price,
+				purchasedQty: cart[key].qty,
+			}
+		))
+						
+
+		const payload={
+			addressId: selectedAddress._id,
+			totalAmount,
+			items,
+			"paymentStatus": "pending"
+		}
+		// console.log("payloadpayloadpayload", payload)
+		dispatch(addOrder_action(payload))
+		setconfirmOrder(true)
+	}
+
+
 	
 
   useEffect(()=>{
@@ -80,8 +120,7 @@ const Checkout = (props) => {
   }, [auth.authenticate])
 
   useEffect(()=>{
-	  
-	
+		
 	setAddre(address)
 	
   },[address])
@@ -96,6 +135,19 @@ const Checkout = (props) => {
 		setAddre(Eff_Address)
 		const updatedAddress = addre.map(adr => adr._id === addr._id ? {...adr, edit:true} : {...adr, edit:false})
 		setAddre(updatedAddress)
+  }
+
+  if(confirmOrder)
+  {
+	  return(
+		  <Layout>
+			  <Card>
+				  <div>
+					  Thank You
+				  </div>
+			  </Card>
+		  </Layout>
+	  )
   }
 
   
@@ -132,8 +184,8 @@ const Checkout = (props) => {
 							<>
 								{
 									confirmAddress ? (
-										<div>
-											{`${selectedAddress.address} - ${selectedAddress.pinCode}`}
+										<div className="stepCompleted">
+											{`${selectedAddress.name} ${selectedAddress.address} - ${selectedAddress.pinCode}`}
 										</div>
 									) 
 									:
@@ -235,13 +287,57 @@ const Checkout = (props) => {
 						title={'Order Summary'}
 						active={orderSummary}
 						body={
-							<Cart onlyItems={true} />
+							fullorderSummary ? <Cart onlyItems={true} /> : null
 						}
 					/>
+					{
+						orderSummary &&
+							<Card
+								style={{
+									margin:"0px 10px 10px 0px"
+								}}
+									
+							>
+								<div className="flexRow sb" style={{padding:"0 30px", alignItems:"center"}}>
+									<p style={{fontSize:"16px"}}>Order Summary email will sent to <strong>{auth.result.email}</strong></p>
+									<MaterialButton
+										title="Continue"
+										style={{width:"150px", margin:"10px 0 10px 200px"}}
+										onClick={confirmOrderbtn}
+									/>
+
+								</div>
+							</Card>
+					}
 
 					<CheckoutStep
 						stepNumber={'4'}
 						title={'Payment Options'}
+						active={PaymentOption}
+						body={
+							PaymentOption ?
+								<div className="flexRow stepCompleted" style={{
+									alignItems:"center"
+								}}>
+									<div>
+										<input name="PaymentOption" type="radio" value="COD"/>
+									</div>
+									&nbsp;
+									<div>
+										<span>Cash On Delivery</span>
+									</div>
+									<MaterialButton
+										title="Confirm Order"
+										onClick={onConfirmOrder}
+										style={{
+											width: "250px",
+											margin:"10px 0px 0px 350px"
+										}}
+									/>
+								</div>	
+							:
+							null
+						}
 					/>
 				</div>
 				

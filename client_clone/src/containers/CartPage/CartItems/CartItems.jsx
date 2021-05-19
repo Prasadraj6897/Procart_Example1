@@ -34,12 +34,12 @@ const CartItems = (props) => {
                 <div className="cartProductImgContainer">
                     <img src={generatePubliUrl(img)} alt="" />
                 </div>
-                <div className="cartItemDetails">
+                <div className="cartItemDetails flexRow">
                     <div>
                         <p>{name}</p>
                         <p>Rs. {price}</p>
                     </div>
-                    <div>
+                    <div style={{padding:'0 0 0 380px'}}>
                         Delivery in 3 - 5 days
                     </div>
                 </div>
