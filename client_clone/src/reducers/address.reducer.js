@@ -40,8 +40,7 @@ let address_reducer = (state = initial_state, action) =>{
         case userAddressConstants.ADD_USER_ADDRESS_SUCCESS :           
             return {
                 ...state,
-                // result: action.payload.result,
-                // token: action.payload.token,
+                address: action.payload.address,
                 loading: false
             }
         case userAddressConstants.ADD_USER_ADDRESS_FAILURE :           

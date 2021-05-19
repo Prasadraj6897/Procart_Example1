@@ -55,19 +55,15 @@ let addAddress_action = (payload) => {
            
             
             if(res.status === 200){
-                console.log("addAddress_actionaddAddress_action",res.data)
-                // const {
-                //     userAddress : {
-                //         address
-                //     }
-                // } = res.data;
+                // console.log("addAddress_actionaddAddress_action",res.data)
+                const {address} = res.data;
 
-                // dispatch(
-                //     {
-                //         type : userAddressConstants.ADD_USER_ADDRESS_SUCCESS, 
-                //         payload:{address}
-                //     }
-                // )
+                dispatch(
+                    {
+                        type : userAddressConstants.ADD_USER_ADDRESS_SUCCESS, 
+                        payload:{address}
+                    }
+                )
                 
             }
             else{

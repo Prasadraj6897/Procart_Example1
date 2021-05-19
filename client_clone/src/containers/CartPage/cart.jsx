@@ -6,6 +6,7 @@ import './style.css'
 import CartItems from './CartItems/CartItems'
 import { addTocart_actions, getCartItem_actions } from '../../actions/cart.actions'
 import {MaterialButton} from '../MaterialUi_Layout/UI_Layout'
+import PriceDetails from '../PriceDetails/PriceDetails'
 
 const Cart = (props) =>{
 
@@ -35,6 +36,24 @@ const Cart = (props) =>{
     const onQuantityDecrement = (_id, qty) => {
         const {name, price, img} = cartItem[_id]
         dispatch(addTocart_actions({_id, name, price, img}, -1))
+    }
+
+    if(props.onlyItems)
+    {
+        return(
+            <>
+                {
+                    Object.keys(cart).map((key, index) => 
+                        <CartItems
+                            key={index}
+                            cartItem={cart[key]}
+                            onQuantityInc={onQuantityIncrement}
+                            onQuantityDec={onQuantityDecrement}
+                        />
+                    )
+                }
+            </>
+        )
     }
 
     return(
@@ -70,14 +89,25 @@ const Cart = (props) =>{
 
                     
                 </Card>
-                <Card
-                    headerleft="Price"
-                    style={{
-                        width:'380px'
-                    }}
-                >
+                <PriceDetails
+                    totalItem={Object.keys(cart).reduce(function(qty, key)
+                         {
+                             return qty + cart[key].qty;
+                         }, 0
+                    )
                     
-                </Card>
+                    }
+
+                    totalPrice={Object.keys(cart).reduce((totalPrice, key)=>
+                        {
+                            const {price, qty} = cart[key]
+                            return totalPrice + price * qty;
+                        }, 0
+                   )
+                   
+                   }
+
+                />
 
             </div>
         </Layout>

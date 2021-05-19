@@ -13,22 +13,57 @@ import {MaterialButton, MaterialInput} from '../MaterialUi_Layout/UI_Layout'
 const AddressForm = (props) => {
     const dispatch = useDispatch()
 
-	const[name, setName] = useState('')
-	const[mobileNumber, setmobileNumber] = useState('')
-	const[pinCode, setpinCode] = useState('')
-	const[locality, setlocality] = useState('')
-	const[address, setaddress] = useState('')
-	const[cityDistrictTown, setcityDistrictTown] = useState('')
-	const[state, setstate] = useState('')
-	const[landmark, setlandmark] = useState('')
-	const[alternatePhone, setalternatePhoneNumber] = useState('')
-	const[addressType, setaddressType] = useState('')
+	const {initialData} = props;
+	const[name, setName] = useState(initialData ? initialData.name : "")
+	const[mobileNumber, setmobileNumber] = useState(initialData ? initialData.mobileNumber :'')
+	const[pinCode, setpinCode] = useState(initialData ? initialData.pinCode :'')
+	const[locality, setlocality] = useState(initialData ? initialData.locality :'')
+	const[address, setaddress] = useState(initialData ? initialData.address :'')
+	const[cityDistrictTown, setcityDistrictTown] = useState(initialData ? initialData.cityDistrictTown :'')
+	const[state, setstate] = useState(initialData ? initialData.state :'')
+	const[landmark, setlandmark] = useState(initialData ? initialData.landmark :'')
+	const[alternatePhone, setalternatePhoneNumber] = useState(initialData ? initialData.alternatePhone :'')
+	const[addressType, setaddressType] = useState(initialData ? initialData.addressType :'')
+
+	const addr = useSelector(state => state.Address_root_reducer.address)
+	const[submitFlag, setsubmitFlag] = useState(false)
+
+	const[id, setId] = useState(initialData ? initialData._id :'')
 
 	const inputContainer = {
 		width: '100%',
 		marginRight: 10
-
+		
 	}
+
+	useEffect(()=>{
+		if(submitFlag)
+		{
+			let _address = {}
+			
+			if(id){
+				_address = {
+					_id: id,
+					name,
+					mobileNumber,
+					pinCode,
+					locality,
+					address,
+					cityDistrictTown,
+					state,
+					landmark,
+					alternatePhone,
+					addressType
+				}
+			}
+			else{
+				
+				_address = addr.address.slice(addr.address.length - 1)[0]
+			}
+			
+			props.onSubmitForm(_address);
+		}
+	},[addr])
 
 	const onAddressSubmit = (e) => {
 		const payload = {
@@ -45,26 +80,21 @@ const AddressForm = (props) => {
 				addressType
 			}
 		}
+		if(id)
+		{
+			payload.address._id = id
+		}
 		dispatch(addAddress_action(payload))
-		props.onSubmitForm();
+		// props.onSubmitForm();
+		setsubmitFlag(true)
 	}
 	const oncancel =() =>{
 		props.oncancel()
 	}
 
-  return(
-    	<div className="checkoutStep" style={{background: '#f5faff'}}>
-			<div className="checkoutHeader">
-				<div>
-					{/* <span className="stepNumber">+</span> */}
-					<span className="stepTitle">{'Add New Address'}</span>
-				</div>
-			</div>
-			<div style={{
-				padding: '0 60px',
-				paddingBottom: '20px',
-				boxSizing: 'border-box'
-			}}>
+	const renderAddressForm = () => {
+		return(
+			<>
 				<div className="flexRow">
 					<div style={inputContainer}>
 						<MaterialInput
@@ -150,6 +180,7 @@ const AddressForm = (props) => {
 							<input type="radio" onClick={()=>setaddressType('home')} name="addressType" value="home"/>
 							<span>Home</span>
 						</div>
+						&nbsp;
 						<div>
 							<input type="radio" onClick={()=>setaddressType('work')} name="addressType" value="work"/>
 							<span>Work</span>
@@ -175,6 +206,29 @@ const AddressForm = (props) => {
 						}}
 					/>
 				</div>
+			</>
+		)
+	}
+
+	if(props.withoutLayout)
+	{
+		return<div>{renderAddressForm()}</div>
+	}
+
+  return(
+    	<div className="checkoutStep" style={{background: '#f5faff'}}>
+			<div className="checkoutHeader">
+				<div>
+					{/* <span className="stepNumber">+</span> */}
+					<span className="stepTitle">{'Add New Address'}</span>
+				</div>
+			</div>
+			<div style={{
+				padding: '0 60px',
+				paddingBottom: '20px',
+				boxSizing: 'border-box'
+			}}>
+				{renderAddressForm()}
 			</div>
 		</div>
    )
