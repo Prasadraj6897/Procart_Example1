@@ -6,7 +6,10 @@ import { getOrder_action } from '../../actions/order.action'
 import { generatePubliUrl } from '../../urlConfig'
 import Layout from '../Layout/Layout'
 import Card from '../UI/Card/card'
+import { BiRupee } from "react-icons/bi";
 import './style.css'
+import { Breed } from '../MaterialUi_Layout/UI_Layout'
+import { IoIosArrowForward } from "react-icons/io";
 
 /**
 * @author
@@ -27,32 +30,35 @@ const Orders = (props) => {
 
 	return(
 		<Layout>
-			{
-				orders.map((order)=>{
-					return order.items.map((item, index)=> (
-						<Card key={index} style={{maxWidth:"1200px", margin:"5px aoto"}}>
-							<div className="orderItemContainer">
-								<div style={{width:80, height:80, overflow:"hidden", textAlign:"center"}}>
-									<img style={{maxWidth:80, maxHeight:80}} src={generatePubliUrl(item.productId.productPictures[0].img)} alt={item.productId.productPictures[0]._id}/>
+			<div style={{ maxWidth: "1160px", margin: "5px auto" }}>
+				<Breed
+					breed={[
+							{ name: "Home", href: "/" },
+							{ name: "My Account", href: "/" },
+							{ name: "My Orders", href: "/user/order" },
+						]}
+					breedIcon={<IoIosArrowForward />}
+				/>
+				{
+					orders.map((order)=>{
+						return order.items.map((item, index)=> (
+							<Card key={index} style={{display: "block", margin:"5px 8px"}}>
+								<div className="orderItemContainer">
+									<div className="orderImgContainer">
+										<img className="orderImg" src={generatePubliUrl(item.productId.productPictures[0].img)} alt={item.productId.productPictures[0]._id}/>
+									</div>
+									<div className="orderRow">
+										<div className="orderName">{item.productId.name}</div>
+										<div className="orderPrice"><BiRupee /> {item.payablePrice}</div>
+										<div>{order.paymentStatus}</div>
+									</div>
+									
 								</div>
-								<div
-									style={{
-										display:'flex',
-										flex:1,
-										justifyContent:'space-between'
-									}}
-								>
-									<div style={{width:300}}>{item.productId.name}</div>
-									<div>{item.payablePrice}</div>
-									<div>{order.paymentStatus}</div>
-								</div>
-								
-							</div>
-						</Card>
-					))
-				})
-			}
-			
+							</Card>
+						))
+					})
+				}
+			</div>
 		</Layout>
 	)
 }

@@ -6,6 +6,7 @@ import './style.css'
 
 import getParams from '../../utils/getParams'
 import Layout from '../Layout/Layout'
+import ClothingAndAccessories from './ClothingAndAccessories/ClothingAndAccessories'
 /**
 * @author
 * @function ProductList
@@ -27,7 +28,7 @@ const ProductList = (props) => {
                     content = <Product_Page {...props} />
                     break;
                 default:
-                    content = null
+                    content = <ClothingAndAccessories {...props}/>
             }
             return content;
         }
