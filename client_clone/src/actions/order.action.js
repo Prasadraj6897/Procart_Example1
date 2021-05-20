@@ -1,4 +1,4 @@
-import {orderConstants} from './constants.js'
+import {orderConstants, cartConstants} from './constants.js'
 import axiosInstance from "../Components/helpers/axios"
 
 let addOrder_action = (payload) => {
@@ -13,12 +13,18 @@ let addOrder_action = (payload) => {
             if(res.status === 200){
                 const orders = res.data.order;
                 console.log("ordersactionordersaction", orders)
-                // dispatch(
-                //     {
-                //         type : orderConstants.ADD_ORDER_SUCCESS, 
-                //         payload:{orders}
-                //     }
-                // )
+                 dispatch(
+                    {
+                        type : cartConstants.RESET_CART, 
+                        
+                    }
+                )
+                dispatch(
+                    {
+                        type : orderConstants.ADD_ORDER_SUCCESS, 
+                        payload:{orders}
+                    }
+                )
                 
             }
             else{
@@ -47,15 +53,15 @@ let getOrder_action = () => {
         try{
             dispatch({type : orderConstants.GET_ORDER_REQUEST})
             const res = await axiosInstance.get('/order/getOrder')
-           
+            console.log("getOrder_action", res.data.orders)
             
             if(res.status === 200){
-                // const orders = res.data.orders;
+                const orders = res.data.orders;
 
                 dispatch(
                     {
                         type : orderConstants.GET_ORDER_SUCCESS, 
-                        // payload:{orders}
+                        payload:{orders}
                     }
                 )
                 

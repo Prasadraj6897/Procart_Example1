@@ -84,14 +84,14 @@ export const addTocart_actions = (product, newQty=1) => {
 }
 
 export const updatecart_actions = (product) => {
-    console.log("updatecart_actions")
+    // console.log("updatecart_actions")
     return async dispatch => {
         const {Auth_root_reducer} = store.getState()
-        console.log("Auth_root_reducerAuth_root_reducer", Auth_root_reducer)
+        // console.log("Auth_root_reducerAuth_root_reducer", Auth_root_reducer)
         
         const cartItems = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : null;
 
-        console.log("ascaschasgicubaGCIYU", cartItems)
+        // console.log("ascaschasgicubaGCIYU", cartItems)
         if(Auth_root_reducer.authenticate)
         {
             localStorage.removeItem('cart')

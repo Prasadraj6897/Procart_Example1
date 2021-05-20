@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router'
+import { getOrder_action } from '../../actions/order.action';
 
 const Header = (props) => {
 
@@ -24,6 +25,7 @@ const Header = (props) => {
 	const [password, setPassword] = useState('');
 	const dispatch = useDispatch()
 	const auth = useSelector(state => state.Auth_root_reducer)
+	// const order = useSelector(state => state.Order_root_reducer.orders)
 
 	const handleLogin = () =>{
 		const form = new FormData();
@@ -41,11 +43,21 @@ const Header = (props) => {
 		dispatch(logout_action())
 	}
 
+	const handleOrders = () =>{
+		dispatch(getOrder_action())
+	}
+
+	
 	//componentDidUpdate
 	useEffect(()=>{
 		if(auth.authenticate)
 			dispatch(isUserLoggedIn)
 	},[auth.authenticate])
+
+	// if(!order.orderLoading){
+    //     return <Redirect to={'/user/order'} />
+    // }
+
 
 	const renderLoggedInMenu = () => {
 		return(
@@ -59,7 +71,7 @@ const Header = (props) => {
 				{ label: 'My Profile', href: '', icon: null },
 				{ label: 'Super Coin Zone', href: '', icon: null },
 				{ label: 'Flipkart Plus Zone', href: '', icon: null },
-				{ label: 'Orders', href: '', icon: null },
+				{ label: 'Orders', href: '', icon: null, onClick:handleOrders },
 				{ label: 'Wishlist', href: '', icon: null },
 				{ label: 'My Chats', href: '', icon: null },
 				{ label: 'Coupons', href: '', icon: null },
@@ -119,7 +131,7 @@ const Header = (props) => {
 					label="Enter Email/Enter Mobile Number"
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
-					active
+					focus
 				  />
   
 				  <MaterialInput 
@@ -209,13 +221,12 @@ const Header = (props) => {
 			  ]}
 			/>
 			<div>
-			  <a className="cart" style={{color:"white"}}>
-				<IoIosCart />
 				<Link to='/cart'>
-					<span style={{ margin: '0 10px', color:'white'}}>Cart</span>
-				</Link>
-				
-			  </a>
+					<a className="cart" style={{color:"white"}}>
+						<IoIosCart />
+						<span style={{ margin: '0 10px', color:'white'}}>Cart</span>
+					</a>
+				</Link>			  
 			</div>
 		  </div>
   
