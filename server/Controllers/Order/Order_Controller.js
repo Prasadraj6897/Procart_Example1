@@ -26,8 +26,8 @@ export const addOrder = (req, res) => {
 
 }
 
-export const getOrder = (req, res) =>{
-    Order.find({user: req.user.id})
+export const getOrder = async (req, res) =>{
+   await Order.find({user: req.user.id})
         .select("_id paymentStatus items")
         .populate("items.productId", "_id name productPictures")
         .exec((error, orders)=>{
