@@ -13,7 +13,7 @@ let initial_state  = {
 }
 
 let page_reducer = (state = initial_state, action) =>{
-    console.log("action_Reducers", action)
+    // console.log("action_Reducers", action)
     switch(action.type){
         case CREATE_PAGE_REQUEST :           
             return {

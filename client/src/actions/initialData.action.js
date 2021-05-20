@@ -7,6 +7,8 @@ const GET_ALL_PRODUCTS_REQUEST = "GET_ALL_PRODUCTS_REQUEST";
 const GET_ALL_PRODUCTS_SUCCESS = "GET_ALL_PRODUCTS_SUCCESS"
 const GET_ALL_PRODUCTS_FAILURE = 'GET_ALL_PRODUCTS_FAILURE'
 
+const GET_CUSTOMER_ORDER_SUCCESS = "GET_CUSTOMER_ORDER_SUCCESS";
+
 
 const getInitialData_action = () => {
     return async (dispatch) => {
@@ -16,7 +18,7 @@ const getInitialData_action = () => {
             console.log(res)
             if(res.status ==200)
             {
-                const {categories, products} = res.data;
+                const {categories, products, Orders} = res.data;
                 dispatch({
                     type:GET_INITIAL_DATA_CATEGORIES_SUCCESS,
                     payload: {
@@ -26,7 +28,14 @@ const getInitialData_action = () => {
                 dispatch({
                     type:GET_ALL_PRODUCTS_SUCCESS,
                     payload: {
-                        products
+                        products : products
+                    }
+                })
+
+                dispatch({
+                    type:GET_CUSTOMER_ORDER_SUCCESS,
+                    payload: {
+                        Orders : Orders
                     }
                 })
             }
@@ -43,4 +52,4 @@ const getInitialData_action = () => {
 
 
 
-export {getInitialData_action, GET_INITIAL_DATA_CATEGORIES_SUCCESS, GET_ALL_PRODUCTS_SUCCESS};
+export {getInitialData_action, GET_INITIAL_DATA_CATEGORIES_SUCCESS, GET_ALL_PRODUCTS_SUCCESS, GET_CUSTOMER_ORDER_SUCCESS};

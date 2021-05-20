@@ -58,7 +58,7 @@ let Routers = () => {
                     <PrivateRoute path='/orders' component={Orders} />
                     <PrivateRoute path='/categories' component={category} />
                 </Switch>
-                <Footer />
+                {/* <Footer /> */}
             </Router>
         </>
         

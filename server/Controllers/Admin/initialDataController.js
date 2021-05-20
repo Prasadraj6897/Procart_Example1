@@ -1,6 +1,6 @@
 import Category from '../../Models/Category.js'
 import Product from '../../Models/Product.js'
-
+import Order from '../../Models/Orders.js'
 
 
 function CreateCategories (CategoryfromResult, parentId = null){
@@ -45,9 +45,12 @@ export const initialData = async (req, res) => {
                                 .select('_id name price quantity slug description productPictures category')
                                 .populate({path: 'category', select:'_id name'})
 
+    const Orders = await Order.find({})
+    
     res.status(200).json({
                         categories: CreateCategories(categories),
-                        products
+                        products,
+                        Orders
         }
          )
 }
