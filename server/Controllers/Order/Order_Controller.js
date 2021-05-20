@@ -9,6 +9,25 @@ export const addOrder = (req, res) => {
         }
         if(result){
             req.body.user = req.user.id
+            req.body.orderStatus = [
+                {
+                    type: "ordered",
+                    date: new Date(),
+                    isCompleted: true,
+                },
+                {
+                    type: "packed",
+                    isCompleted: false,
+                },
+                {
+                    type: "shipped",
+                    isCompleted: false,
+                },
+                {
+                    type: "delivered",
+                    isCompleted: false,
+                }
+            ]
             const order = new Order(req.body)
             order.save((error, order)=>{
                 if(error)
@@ -28,7 +47,7 @@ export const addOrder = (req, res) => {
 
 export const getOrder = async (req, res) =>{
    await Order.find({user: req.user.id})
-        .select("_id paymentStatus items")
+        .select("_id paymentStatus paymentType orderStatus items")
         .populate("items.productId", "_id name productPictures")
         .exec((error, orders)=>{
             if(error)

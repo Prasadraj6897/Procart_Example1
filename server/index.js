@@ -12,6 +12,7 @@ import InitialDataRouter from './Routers/Admin/iniialData.js'
 import PageRouter from './Routers/Page/Page.js'
 import AddressRouter from './Routers/Address/Address.js'
 import OrderRouter from './Routers/Orders/Orders.js'
+import UpdateOrderRouter from './Routers/Admin/order.admin.js'
 
 import * as path from 'path';
 
@@ -49,7 +50,7 @@ app.use('/data', InitialDataRouter);
 app.use('/page', PageRouter);
 app.use('/address', AddressRouter);
 app.use('/order', OrderRouter);
-
+app.use('/order', UpdateOrderRouter);
 
 
 
