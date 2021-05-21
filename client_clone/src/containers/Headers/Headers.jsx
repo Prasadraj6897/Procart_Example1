@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router'
 import { getOrder_action } from '../../actions/order.action';
+import CartLogo from '../UI/Cart/CartLogo';
 
 const Header = (props) => {
 
@@ -25,6 +26,7 @@ const Header = (props) => {
 	const [password, setPassword] = useState('');
 	const dispatch = useDispatch()
 	const auth = useSelector(state => state.Auth_root_reducer)
+	const cart = useSelector(state => state.Cart_root_reducer.cartItems)
 	// const order = useSelector(state => state.Order_root_reducer.orders)
 
 	const handleLogin = () =>{
@@ -223,7 +225,7 @@ const Header = (props) => {
 			<div>
 				<Link to='/cart'>
 					<a className="cart" style={{color:"white"}}>
-						<IoIosCart />
+						<CartLogo count={Object.keys(cart).length} />
 						<span style={{ margin: '0 10px', color:'white'}}>Cart</span>
 					</a>
 				</Link>			  

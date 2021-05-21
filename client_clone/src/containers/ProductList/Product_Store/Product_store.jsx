@@ -32,7 +32,7 @@ const Product_Store = (props) => {
   return(
     <>
             {
-                product ?
+                product &&
                 
                 <>
                     {
@@ -72,9 +72,9 @@ const Product_Store = (props) => {
                     
                 
                 
-                : 
+                // : 
                 
-                "Loading...!"
+                // "Loading...!"
             }
            
         </>
