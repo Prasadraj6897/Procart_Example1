@@ -15,8 +15,7 @@ import Rating from '../../UI/RatingUI/RatingUI'
 
 const Product_Store = (props) => {
 
-    const product = useSelector(state => state.Product_root_reducer.prducts)
-    // const priceRange = product.priceRange;
+    let product = {}
    
     const dispatch = useDispatch()
     useEffect(() => {
@@ -24,6 +23,9 @@ const Product_Store = (props) => {
             dispatch(getProductsBySlug(match.params.slug))
 
         }, [])
+
+        product = useSelector(state => state.Product_root_reducer.prducts)
+        // console.log(product.products)
   return(
     <>
         {/* {JSON.stringify(product.priceRange)} */}

@@ -18,6 +18,7 @@ const ProductList = (props) => {
 
         const renderProduct = () =>{
             const params = getParams(props.location.search)
+            // console.log(params)
             let content = null;
             switch(params.type)
             {
@@ -29,6 +30,7 @@ const ProductList = (props) => {
                     break;
                 default:
                     content = <ClothingAndAccessories {...props}/>
+                    break;
             }
             return content;
         }
