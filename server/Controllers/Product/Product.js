@@ -44,12 +44,13 @@ export const getProductsBySlug =  async (req, res)=>{
     
     try{
         Category.findOne({slug:slug})
-        .select('_id')
+        .select('_id type')
         .exec((error, category) => {
             if(error)
             {
                 return res.status(500).json({message : error})
             }
+            
             if(category)
             {
                 Product.find({category: category._id})
