@@ -46,6 +46,8 @@ export const initialData = async (req, res) => {
                                 .populate({path: 'category', select:'_id name'})
 
     const Orders = await Order.find({})
+    .populate("items.productId", "name")
+    .exec()
     
     res.status(200).json({
                         categories: CreateCategories(categories),

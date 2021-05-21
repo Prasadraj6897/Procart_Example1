@@ -1,5 +1,6 @@
 import Order from '../../Models/Orders.js'
 import Cart from '../../Models/Cart.js'
+import Address from '../../Models/Address.js'
 
 export const addOrder = (req, res) => {
     Cart.deleteOne({user:req.user.id}).exec((error,result)=>{
@@ -60,3 +61,27 @@ export const getOrder = async (req, res) =>{
             }
         })
 }
+
+//FOR INVOICE Page we need every details of product adress in last
+
+export const getInvoiceOrderDetails = (req, res) => {
+    Order.findOne({ _id: req.body.orderId })
+      .populate("items.productId", "_id name productPictures")
+      .lean()
+      .exec((error, order) => {
+        if (error) return res.status(400).json({ error });
+        if (order) {
+          Address.findOne({
+            user: req.user.id,
+          }).exec((error, address) => {
+            if (error) return res.status(400).json({ error });
+            order.address = address.address.find(
+              (adr) => adr._id.toString() == order.addressId.toString()
+            );
+            res.status(200).json({
+              order,
+            });
+          });
+        }
+      });
+  };

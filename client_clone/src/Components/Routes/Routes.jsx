@@ -7,6 +7,7 @@ import Cart from "../../containers/CartPage/cart";
 import Checkout from "../../containers/Checkout/Checkout";
 
 import HomePage from '../../containers/HomePage/HomePages'
+import OrderDetails from "../../containers/OrderDetails/OrderDetails";
 import Orders from "../../containers/OrdersPage/Orders";
 import ProductList from "../../containers/ProductList/ProdectList";
 import ProductDetails from "../../containers/ProductList/Product_details/Product_DetailsPage";
@@ -37,8 +38,10 @@ let Routers = () => {
                     <Route  path = '/checkout' component={Checkout} />
                     <Route  path='/cart'  component={Cart} />
                     <Route path="/user/order" component={Orders} />
+                    <Route path="/order_details/:orderId" component={OrderDetails} />
                     <Route exact path='/:Productslug/:ProductId/p'  component={ProductDetails} />
-                    <Route exact path='/:slug'  component={ProductList} />
+                     <Route path="/:slug" component={ProductList} />
+                    
                     
                     
                 </Switch>

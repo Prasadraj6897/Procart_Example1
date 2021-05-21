@@ -2,7 +2,8 @@ import {orderConstants} from '../actions/constants.js'
 
 const initialState = {
    orders:[],
-   orderLoading: false
+   orderLoading: false,
+   orderDetails:{}
 }
 
 export default (state = initialState, action) => {
@@ -46,6 +47,28 @@ export default (state = initialState, action) => {
             break;
 
         case orderConstants.GET_ORDER_FAILURE:
+            state = {
+                ...state,
+                orderLoading: false,
+                error: action.payload.error
+            }
+            break;
+        
+        case orderConstants.GET_INVOICE_ORDER_REQUEST:
+            state = {
+                ...state,
+                orderLoading: true
+            }
+            break;
+        case orderConstants.GET_INVOICE_ORDER_SUCCESS:
+            state = {
+                ...state,
+                orderDetails: action.payload.order,
+                orderLoading: false
+            }
+            break;
+
+        case orderConstants.GET_INVOICE_ORDER_FAILURE:
             state = {
                 ...state,
                 orderLoading: false,

@@ -10,6 +10,7 @@ import { BiRupee } from "react-icons/bi";
 import './style.css'
 import { Breed } from '../MaterialUi_Layout/UI_Layout'
 import { IoIosArrowForward } from "react-icons/io";
+import { Link } from 'react-router-dom'
 
 /**
 * @author
@@ -43,17 +44,19 @@ const Orders = (props) => {
 					orders.map((order)=>{
 						return order.items.map((item, index)=> (
 							<Card key={index} style={{display: "block", margin:"5px 8px"}}>
-								<div className="orderItemContainer">
-									<div className="orderImgContainer">
-										<img className="orderImg" src={generatePubliUrl(item.productId.productPictures[0].img)} alt={item.productId.productPictures[0]._id}/>
+								<Link to={`/order_details/${order._id}`}>
+									<div className="orderItemContainer">
+										<div className="orderImgContainer">
+											<img className="orderImg" src={generatePubliUrl(item.productId.productPictures[0].img)} alt={item.productId.productPictures[0]._id}/>
+										</div>
+										<div className="orderRow">
+											<div className="orderName">{item.productId.name}</div>
+											<div className="orderPrice"><BiRupee /> {item.payablePrice}</div>
+											<div>{order.paymentStatus}</div>
+										</div>
+										
 									</div>
-									<div className="orderRow">
-										<div className="orderName">{item.productId.name}</div>
-										<div className="orderPrice"><BiRupee /> {item.payablePrice}</div>
-										<div>{order.paymentStatus}</div>
-									</div>
-									
-								</div>
+								</Link>
 							</Card>
 						))
 					})

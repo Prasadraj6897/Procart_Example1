@@ -49,7 +49,7 @@ let Routers = () => {
                 <Navbar />
                 <Switch>
                     <PrivateRoute exact path='/' component={HomePage} />
-                    <Route exact path='/admin' component={Admin} />
+                    <Route  path='/admin' component={Admin} />
                     <PrivateRoute path='/page' component={NewPage} />
                     {/* <Route exact path='/laptops' component={Laptops} /> */}
                     <PrivateRoute exact path='/mobiles' component={Mobiles} />

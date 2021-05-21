@@ -28,7 +28,11 @@ const Header = (props) => {
 	const auth = useSelector(state => state.Auth_root_reducer)
 	const cart = useSelector(state => state.Cart_root_reducer.cartItems)
 	// const order = useSelector(state => state.Order_root_reducer.orders)
-
+	useEffect(()=>{
+		if(auth.authenticate)
+			dispatch(isUserLoggedIn)
+	},[auth.authenticate])
+	
 	const handleLogin = () =>{
 		const form = new FormData();
 		form.append('email', email);
@@ -51,10 +55,7 @@ const Header = (props) => {
 
 	
 	//componentDidUpdate
-	useEffect(()=>{
-		if(auth.authenticate)
-			dispatch(isUserLoggedIn)
-	},[auth.authenticate])
+	
 
 	// if(!order.orderLoading){
     //     return <Redirect to={'/user/order'} />

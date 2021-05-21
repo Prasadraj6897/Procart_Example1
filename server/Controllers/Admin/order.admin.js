@@ -3,7 +3,7 @@ import Order from '../../Models/Orders.js'
 export const AdminUpdateOrder = async (req, res)=>{
     
     try{
-            Order.updateOne(
+           await Order.updateOne(
                 {_id: req.body.orderId, "orderStatus.type" : req.body.type},
                 {
                     $set:{
@@ -20,6 +20,21 @@ export const AdminUpdateOrder = async (req, res)=>{
                     return res.status(200).json({order})
                 }
             })
+    }
+    catch(error){
+
+    }
+
+}
+
+export const getCustomerOrder = async (req, res)=>{
+    
+    try{
+           const orders = await Order.find({})
+            .populate("items.productId", "name")
+            .exec()
+
+        res.status(200).json({orders})
     }
     catch(error){
 
