@@ -14,19 +14,19 @@ const PriceDetails = (props) => {
 					<div>
 						Price ({props.totalItem} items)
 					</div>
-					<div>
+					<div style={{margin:"0 0 0 180px"}}>
 						{props.totalPrice}
 					</div>
 				</div>
 
 				<div className="flexRow sb" style={{margin:"10px 0"}}>
 					<div>Delivery Charges </div>
-					<div>Free</div>
+					<div style={{margin:"0 0 0 160px"}}>Free</div>
 				</div>
 
 				<div className="flexRow sb" style={{margin:"10px 0"}}>
 					<div>Total Amount</div>
-					<div>{props.totalPrice}</div>
+					<div style={{margin:"0 0 0 180px"}}>{props.totalPrice}</div>
 				</div>
 
 			</div>
