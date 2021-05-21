@@ -64,6 +64,16 @@ export const getProductsBySlug =  async (req, res)=>{
                     if(products.length > 0)
                     {
                         return res.status(200).json({products,
+                            priceRange: {
+                                under5k: 5000,
+                                under10k: 10000,
+                                under15k: 15000,
+                                under20k: 20000,
+                                under25k: 25000,
+                                under30k: 30000,
+                                above50k: 50000,
+                                above100k: 100000,
+                              },
                             ProductPrice: {
                                 under5k: products.filter(product=> product.price <= 5000),
                                 under10k: products.filter(product=> product.price > 5000 && product.price <= 10000),
