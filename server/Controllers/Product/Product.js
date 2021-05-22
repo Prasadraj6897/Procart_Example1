@@ -29,7 +29,7 @@ export const createProduct = async (req, res)=>{
 
        const result = await Product.create(Productlist)
        
-       return res.status(201).json({result})
+       return res.status(200).json({result})
     }
     catch(error){
        
@@ -128,6 +128,48 @@ export const getProductDetailsBySlug =  async (req, res)=>{
                 }
             })
         }
+    }
+    catch(error){
+        return res.status(400).json({message : error})
+    }
+}
+
+export const deleteProductById =  async (req, res)=>{
+    console.log(req.body.payload)
+    const productId = req.body.payload.productId
+    // console.log(req)
+    
+    try{
+        if(productId)
+        {
+           Product.deleteOne({_id:productId})
+            .exec((error, result)=>{
+                if(error)
+                {
+                    return res.status(400).json({message : error})
+                }
+                if(result)
+                {
+                    return res.status(200).json({result})
+                }
+            })
+        }
+    }
+    catch(error){
+        return res.status(400).json({message : error})
+    }
+}
+
+export const getALLProducts =  async (req, res)=>{
+    // console.log("products")
+    try{
+            
+            const products = await Product.find({})
+                                .select('_id name price quantity slug description productPictures category')
+                                .populate({path: 'category', select:'_id name'})
+                                .exec()
+        // console.log(products)
+        return res.status(200).json({products})
     }
     catch(error){
         return res.status(400).json({message : error})

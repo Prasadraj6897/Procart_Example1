@@ -26,6 +26,11 @@ const CartItems = (props) => {
         setQty(qty - 1)
         props.onQuantityDec(_id, qty-1)
     }
+
+    // const OnremoveCartItems =(_id) =>{
+    //     console.log(_id)
+       
+    // }
    
   return(
         <div className="cartItemContainer">
@@ -56,7 +61,7 @@ const CartItems = (props) => {
                     <button onClick={onQuantityIncrement}> + </button>
                 </div>
                 <button className ='cartActionBtn'> Save For Later </button>
-                <button className ='cartActionBtn'> Remove </button>
+                <button className ='cartActionBtn' onClick={() =>  props.removeCartItem(_id)}> Remove </button>
 
             </div>
         </div>

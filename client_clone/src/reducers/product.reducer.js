@@ -15,17 +15,19 @@ const initState = {
     pageRequest: false,
     page:{},
     loading:false,
-    productDetails:{}
+    productDetails:{},
+    priceRange:{},
 }
 
 export default (state = initState, action) => {
-    // console.log("action.payloadaction.payload",action.payload)
+    console.log("action.payload Productsss",action.payload)
     switch(action.type)
     {
         case Product_constants.GET_PRODUCT_SLUG:
             state = {
                 ...state,
                 prducts:action.payload.product,
+                priceRange:action.payload.priceRange,
                 productByPrice: {
                     ...action.payload.productByPrice
                 }

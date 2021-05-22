@@ -3,7 +3,7 @@ import axiosInstance from '../Components/helpers/axios.js'
 import {store} from '../store/store.js'
 
 const getCartItem_actions = () => {
-    console.log("getCartItem_actions")
+    // console.log("getCartItem_actions")
     return async dispatch => {
         try{
             dispatch({
@@ -14,7 +14,7 @@ const getCartItem_actions = () => {
             if(res.status ===200)
             {
                 const {cartItems} = res.data;
-                console.log({getCartItem_actions: cartItems})
+                // console.log({getCartItem_actions: cartItems})
                 if(cartItems)
                 {
                     dispatch({
@@ -41,7 +41,7 @@ export const addTocart_actions = (product, newQty=1) => {
        const {Auth_root_reducer} = store.getState()
         // console.log("produtsprodutsproduts", cartItems)
         // // const product = action.pa
-        console.log("addTocart_actions",Auth_root_reducer)
+        // console.log("addTocart_actions",Auth_root_reducer)
 
         const qty = cartItems[product._id] ? parseInt(cartItems[product._id].qty + newQty) : 1;
         cartItems[product._id] = {
@@ -61,7 +61,7 @@ export const addTocart_actions = (product, newQty=1) => {
                     quantity: qty
                 }]
             }
-            console.log("payloadpayloadpayload", payload)
+            // console.log("payloadpayloadpayload", payload)
             const res = await axiosInstance.post(`/cart/addtocart`, payload)
             if(res.status == 200)
             {
@@ -133,4 +133,38 @@ export const updatecart_actions = (product) => {
 
 }
 
-export {getCartItem_actions}
+const removeCartItem_actions = (payload) => {
+    // console.log("getCartItem_actions")
+    return async dispatch => {
+        try{
+            dispatch({
+                type: cartConstants.REMOVE_CART_REQUEST,
+               
+            })
+            const res = await axiosInstance.post(`/cart/removeCartItems`, {payload})
+            if(res.status ===200)
+            {
+                dispatch({
+                    type: cartConstants.REMOVE_CART_SUCCESS,
+                    
+                })
+                dispatch(getCartItem_actions())
+                
+            }
+           else
+                {
+                    const {error} = res.data
+                    dispatch({
+                        type: cartConstants.REMOVE_CART_FAILURE,
+                        payload: {error}
+                    })
+                }
+        }
+        catch(error)
+        {
+            console.log(error)
+        }
+    }
+}
+
+export {getCartItem_actions, removeCartItem_actions}

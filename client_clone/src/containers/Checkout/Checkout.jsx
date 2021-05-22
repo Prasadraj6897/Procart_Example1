@@ -12,6 +12,7 @@ import PriceDetails from '../PriceDetails/PriceDetails'
 import { getCartItem_actions } from '../../actions/cart.actions'
 import Cart from '../CartPage/cart'
 import { addOrder_action } from '../../actions/order.action'
+import { Redirect } from 'react-router'
 /**
 * @author
 * @function Checkout
@@ -140,16 +141,9 @@ const Checkout = (props) => {
 
   if(confirmOrder)
   {
-	  return(
-		  <Layout>
-			  <Card>
-				  <div>
-					  Thank You
-				  </div>
-			  </Card>
-		  </Layout>
-	  )
-  }
+	  return <Redirect to={`/user/order`} />
+
+	}
 
   
   return(

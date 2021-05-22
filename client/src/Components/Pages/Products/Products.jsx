@@ -2,7 +2,7 @@ import React, {useState}from 'react'
 import {Container, Row,Col,  Table, Button, Modal } from 'react-bootstrap'
 import {useDispatch, useSelector} from "react-redux"
 import TextField from '@material-ui/core/TextField';
-import { addProduct_action } from '../../../actions/product.action';
+import { addProduct_action, deleteProductById_Action, getALLProducts_Action } from '../../../actions/product.action';
 import './style.css'
 import { generatePubliUrl } from '../../../urlConfig';
 
@@ -34,7 +34,7 @@ const Products = (props) => {
 
 	dispatch(addProduct_action(form))
 
-
+	dispatch(getALLProducts_Action())
 	setShow(false)
 
 };
@@ -94,13 +94,29 @@ const renderProducts = () => {
 				{
 					product.length > 0 ? 
 						product.map(prod =>
-							<tr onClick ={()=>handlePrductOpen(prod)} key={prod._id}>
+							<tr key={prod._id}>
 								<td>2</td>
 								<td>{prod.name}</td>
 								<td>{prod.price}</td>
 								<td>{prod.quantity}</td>
 								{/* <td>{prod.description}</td> */}
 								<td>{prod.category.name}</td>
+								<td>
+									<button onClick ={()=>handlePrductOpen(prod)}>
+										Info
+									</button>
+								</td>
+								&nbsp;
+								<td>
+									<button onClick ={()=>{
+										const payload = {
+											productId: prod._id
+										};
+										dispatch(deleteProductById_Action(payload))
+									}}>
+										Delete
+									</button>
+								</td>
 							</tr>
 							
 							)
