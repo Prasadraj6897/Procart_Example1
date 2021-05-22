@@ -135,7 +135,7 @@ export const getProductDetailsBySlug =  async (req, res)=>{
 }
 
 export const deleteProductById =  async (req, res)=>{
-    console.log(req.body.payload)
+    // console.log(req.body.payload)
     const productId = req.body.payload.productId
     // console.log(req)
     

@@ -11,7 +11,7 @@ import {
 } from '../MaterialUi_Layout/UI_Layout'
 import './style.css'
 import { useDispatch } from 'react-redux';
-import { isUserLoggedIn, login_action, logout_action } from '../../actions/auth.action';
+import { isUserLoggedIn, login_action, logout_action, signup_action } from '../../actions/auth.action';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -22,8 +22,12 @@ import CartLogo from '../UI/Cart/CartLogo';
 const Header = (props) => {
 
 	const [loginModal, setLoginModal] = useState(false);
+	const [signUpModal, setSignupModal] = useState(false)
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
+	const [ConfirmPassword, setConfirmPassword] = useState('');
 	const dispatch = useDispatch()
 	const auth = useSelector(state => state.Auth_root_reducer)
 	const cart = useSelector(state => state.Cart_root_reducer.cartItems)
@@ -32,17 +36,44 @@ const Header = (props) => {
 		if(auth.authenticate)
 			dispatch(isUserLoggedIn)
 	},[auth.authenticate])
+
+	useEffect(() => {
+		if (auth.authenticate) {
+		  setLoginModal(false);
+		}
+	  }, [auth.authenticate]);
+
+	  const userSignup = () => {
+		const user = { firstName, lastName, email, password, ConfirmPassword };
+		if (
+		  firstName === "" ||
+		  lastName === "" ||
+		  email === "" ||
+		  password === "" ||
+		  ConfirmPassword ===""
+		) {
+		  return;
+		}
+	
+		dispatch(signup_action(user));
+	  };
 	
 	const handleLogin = () =>{
-		const form = new FormData();
-		form.append('email', email);
-		form.append('password', password);
-
-		// console.log(form)
-		dispatch(login_action({email, password}))
-		setLoginModal(false)
-		setEmail('');
-		setPassword('');
+		if (signUpModal) {
+			userSignup();
+		  } else {
+			const form = new FormData();
+			form.append('email', email);
+			form.append('password', password);
+	
+			// console.log(form)
+			
+			dispatch(login_action({email, password}))
+			setLoginModal(false)
+			setEmail('');
+			setPassword('');
+		}
+		
 	}
 
 	const handleLogout = () =>{
@@ -92,7 +123,7 @@ const Header = (props) => {
 		return(
 			<DropdownMenu
 			  menu={
-				<a className="loginButton" onClick={() => setLoginModal(true)}>
+				<a className="loginButton" onClick={() =>{ setSignupModal(false)}}>
 				  Login
 				</a>
 			  }
@@ -107,7 +138,15 @@ const Header = (props) => {
 			  firstMenu={
 				<div className="firstmenu">
 				  <span>New Customer?</span>
-				  <a style={{ color: '#2874f0' }}>Sign Up</a>
+				  <a
+					onClick={() => {
+						setLoginModal(true);
+						setSignupModal(true);
+					}}
+					style={{ color: "#2874f0" }}
+					>
+					Sign Up
+					</a>
 				</div>
 			  }
 			/>
@@ -129,6 +168,32 @@ const Header = (props) => {
 			  <div className="rightspace">
 			
 				<div className = "loginInputContainer">
+					{auth.error && (
+						<div style={{ color: "red", fontSize: 12 }}>{auth.error}</div>
+					)}
+					{
+						signUpModal && (
+							<MaterialInput 
+								type="text"
+								label="Enter First Name"
+								value={firstName}
+								onChange={(e) => setFirstName(e.target.value)}
+								focus
+							/>
+						)
+					}
+
+					{
+						signUpModal && (
+							<MaterialInput 
+								type="text"
+								label="Enter Last Name"
+								value={lastName}
+								onChange={(e) => setLastName(e.target.value)}
+								focus
+							/>
+						)
+					}
 				  <MaterialInput 
 					type="text"
 					label="Enter Email/Enter Mobile Number"
@@ -144,8 +209,20 @@ const Header = (props) => {
 					onChange={(e) => setPassword(e.target.value)}
 					// rightElement={<a href="#">Forgot?</a>}
 				  />
+				  
+				  {
+						signUpModal && (
+							<MaterialInput 
+								type="text"
+								label="Enter Confirm Password"
+								value={ConfirmPassword}
+								onChange={(e) => setConfirmPassword(e.target.value)}
+								focus
+							/>
+						)
+					}
 				  <MaterialButton 
-					title="Login"
+					title={signUpModal ? "Register" : "Login"}
 					bgColor="#fb641b"
 					textColor="#ffffff"
 					style={{
