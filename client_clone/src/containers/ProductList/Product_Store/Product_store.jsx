@@ -24,19 +24,20 @@ const Product_Store = (props) => {
 
         }, [])
 
-        product = useSelector(state => state.Product_root_reducer.prducts)
+        product = useSelector(state => state.Product_root_reducer)
+        const priceRange = product.priceRange;
         // console.log(product.products)
   return(
     <>
         {/* {JSON.stringify(product.priceRange)} */}
             {
-                product &&
+                product.prducts &&
                 
                 <>
-                     {Object.keys(product.ProductPrice).map((key, index) => {
+                     {Object.keys(product.productByPrice).map((key, index) => {
                         return (
                             <Card
-                                headerleft={`${props.match.params.slug} mobile under ${product.priceRange[key]}`}
+                                headerleft={`${props.match.params.slug} mobile under ${priceRange[key]}`}
                                 headerright={
                                     <MaterialButton
                                         title={"VIEW ALL"}
@@ -53,7 +54,7 @@ const Product_Store = (props) => {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    {product.ProductPrice[key].map((product) => (
+                                    {product.productByPrice[key].map((product) => (
                                         <Link
                                             to={`/${product.slug}/${product._id}/p`}
                                             style={{

@@ -12,7 +12,7 @@ import { getProductsBySlug } from '../../../actions/Product.action';
 **/
 
 const ClothingAndAccessories = (props) => {
-	const productss = useSelector(state => state.Product_root_reducer.prducts)
+	const productss = useSelector(state => state.Product_root_reducer)
 	const dispatch = useDispatch()
     
 	useEffect(() => {
@@ -20,7 +20,7 @@ const ClothingAndAccessories = (props) => {
             dispatch(getProductsBySlug(match.params.slug))
 
         }, [])
-		console.log(productss)
+		// console.log(productss)
 	return(
 		<div style={{padding:"10px"}}>
 			<Card style={{
@@ -31,11 +31,11 @@ const ClothingAndAccessories = (props) => {
 				className="flexRow"
 			>
 				{
-                productss ?
+                productss.prducts ?
                 
 					<>
 						 {
-							productss.products.map((product) => (
+							productss.prducts.map((product) => (
 
 									<div className="caContainer">
 										<Link

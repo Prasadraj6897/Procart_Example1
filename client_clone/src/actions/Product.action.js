@@ -9,9 +9,7 @@ export const getProductsBySlug = (slug) => {
         {
             dispatch({
                 type: Product_constants.GET_PRODUCT_SLUG,
-                payload:{
-                    product:res.data,
-                }
+                payload:res.data
             })
         }
         else
