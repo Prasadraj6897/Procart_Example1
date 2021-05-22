@@ -36,7 +36,8 @@ const Checkout = (props) => {
   const auth = useSelector(state => state.Auth_root_reducer)
   const address = useSelector(state => state.Address_root_reducer.address)
   const cart = useSelector(state => state.Cart_root_reducer.cartItems)
-
+  const orders = useSelector(state => state.Order_root_reducer);
+  
   const[newAddress, setNewAddress] = useState(false)
   const[confirmAddress, setconfirmAddress] = useState(false)
   const[selectedAddress, setselectedAddress] = useState(null)
@@ -138,18 +139,25 @@ const Checkout = (props) => {
 		setAddre(updatedAddress)
   }
 
-  if(confirmOrder)
-  {
-	  return(
-		  <Layout>
-			  <Card>
-				  <div>
-					  Thank You for ordering go to orders page
-				  </div>
-			  </Card>
-		  </Layout>
-	  )
-  }
+//   if(confirmOrder)
+//   {
+// 	  return(
+// 		  <Layout>
+// 			  <Card>
+// 				  <div>
+// 					  Thank You for ordering go to orders page
+// 				  </div>
+// 			  </Card>
+// 		  </Layout>
+// 	  )
+//   }
+
+  useEffect(() => {
+	  console.log(orders)
+    if (confirmOrder && orders.placedOrderId) {
+      props.history.push(`/order_details/${orders.placedOrderId}`);
+    }
+  }, [orders.placedOrderId]);
 
   
   return(

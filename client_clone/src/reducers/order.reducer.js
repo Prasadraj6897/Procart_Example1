@@ -3,7 +3,8 @@ import {orderConstants} from '../actions/constants.js'
 const initialState = {
    orders:[],
    orderLoading: false,
-   orderDetails:{}
+   orderDetails:{},
+   placedOrderId: null,
 }
 
 export default (state = initialState, action) => {
@@ -20,7 +21,8 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 orders: action.payload.orders,
-                orderLoading: false
+                orderLoading: false,
+                placedOrderId: action.payload.orders._id,
             }
             break;
 
