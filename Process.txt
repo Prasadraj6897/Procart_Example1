@@ -47,6 +47,11 @@ push to git in new repository
 	git push origin main
 
 in github if any folder has arrow
+		(in root folder)
+			git rm --cached client      
+			git commit -m "remove client gitlink"
+		 
+				(or)
 		git rm --cached client  (client is a folder)
 		git commit -m ""
 		rimraf client\.git
