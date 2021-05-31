@@ -38,7 +38,15 @@ const Products = (props) => {
 	setShow(false)
 
 };
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+		setname('')
+		setquantity('')
+		setprice('')
+		setdescription('')
+		setCategoryId('')
+		setproductPictures('')
+	  setShow(true);
+	}
 
   const [name, setname] = useState('');
   const [quantity, setquantity] = useState('');
@@ -81,7 +89,7 @@ const renderProducts = () => {
 			{/* <pre>{JSON.stringify(product)}</pre> */}
 			<thead>
 				<tr>
-					<th>#</th>
+					<th>ID</th>
 					<th>Name</th>
 					<th>Price</th>
 					<th>Quantity</th>
@@ -95,7 +103,7 @@ const renderProducts = () => {
 					product.length > 0 ? 
 						product.map(prod =>
 							<tr key={prod._id}>
-								<td>2</td>
+								<td>{prod._id}</td>
 								<td>{prod.name}</td>
 								<td>{prod.price}</td>
 								<td>{prod.quantity}</td>

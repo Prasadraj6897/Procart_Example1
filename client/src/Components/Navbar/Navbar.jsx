@@ -67,7 +67,7 @@ let NavBar = () => {
 
   return (
     // <MDBContainer>      
-        <MDBNavbar color="secondary-color"  dark expand="sm" style={{height:'10%'}}>
+        <MDBNavbar color="primary-color"  dark expand="sm" style={{height:'10%'}}>
             {/* <pre>{JSON.stringify(Auth_token.result)}</pre> */}
             {/* <pre>{JSON.stringify(AuthToken)}</pre> */}
             
@@ -172,7 +172,7 @@ let NavBar = () => {
                             </Link>
                         
                         </MDBNavItem>
-                        <MDBNavItem>
+                       {/*  <MDBNavItem>
                             <Link className='navbar-brand' to='/mobiles' active={activeItemPills === '2'} >
                                 <strong className="white-text">Mobiles</strong>
                             </Link>
@@ -187,7 +187,7 @@ let NavBar = () => {
                             <Link className='navbar-brand' to='/laptops'>
                                 <strong className="white-text">Laptops</strong>
                             </Link>
-                        </MDBNavItem>
+                        </MDBNavItem> */}
                         <MDBNavItem>
                             {/* <MDBDropdown>
                                 <MDBDropdownToggle nav caret>
@@ -203,11 +203,11 @@ let NavBar = () => {
                         </MDBNavItem>
                     </MDBNavbarNav>
                     <MDBNavbarNav right>
-                        <MDBNavItem className="nav-item active">
+                        {/* <MDBNavItem className="nav-item active">
                             <Link className="nav-link" to="/envelope">1
                                 <MDBIcon icon="shopping-cart" className="ml-1" />
                             </Link>
-                        </MDBNavItem>
+                        </MDBNavItem> */}
                         {" "}
                         {
                             Auth_token.token == null?

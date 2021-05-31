@@ -60,7 +60,7 @@ const ProductDetails = (props) => {
                         }
                         </div> */}
                     </Col>
-                    <Col xs={8} className="productDescContainer">
+                    <Col xs={6} className="productDescContainer">
                         <div className="productDescImgContainer">
                             <img src={generatePubliUrl(product.productPictures[0].img)} alt={`${product.productPictures[0].img}`} />
                         </div>
@@ -100,7 +100,7 @@ const ProductDetails = (props) => {
                 </Row>
             
             </Container>
-            <div>
+            <div style={{width:"100%"}}>
 
                 {/* home > category > subCategory > productName */}
                 <div className="breed">

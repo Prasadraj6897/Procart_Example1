@@ -25,10 +25,10 @@ export const adminsignIn = async (req, res)=>{
             return res.status(400).json({message : "You have no access"})
         }
 
-        const token = jwt.sign({email: existingUser.email, id: existingUser._id, role: existingUser.role}, 'test', {expiresIn: "1h"})
+        const token = jwt.sign({email: existingUser.email, id: existingUser._id, role: existingUser.role}, 'test', {expiresIn: "1d"})
 
         //created cookie
-        res.cookie('token', token, {expiresIn: "1h"})
+        res.cookie('token', token, {expiresIn: "1d"})
 
 
         return res.status(200).json({result:existingUser, token})
@@ -63,7 +63,7 @@ export const adminsignUp = async (req, res)=>{
 
         // may remove await below
 
-        const token = jwt.sign({email: result.email, id: result._id}, 'test', {expiresIn: "1h"})
+        const token = jwt.sign({email: result.email, id: result._id, role:result.role}, 'test', {expiresIn: "1d"})
 
         return res.status(200).json({result, token})
     }

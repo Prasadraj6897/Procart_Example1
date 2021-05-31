@@ -1,4 +1,5 @@
 import axiosInstance from "../Components/helpers/axios";
+import axios from 'axios'
 
 const GET_CATEGORIES_REQUEST = "GET_CATEGORIES_REQUEST";
 const GET_CATEGORIES_SUCCESS = "GET_CATEGORIES_SUCCESS";
@@ -15,6 +16,7 @@ const UPDATE_CATEGORIES_FAILURE = "UPDATE_CATEGORIES_FAILURE";
 const DELETE_CATEGORIES_REQUEST = "DELETE_CATEGORIES_REQUEST";
 const DELETE_CATEGORIES_SUCCESS = "DELETE_CATEGORIES_SUCCESS";
 const DELETE_CATEGORIES_FAILURE = "DELETE_CATEGORIES_FAILURE";
+
 
 
 let get_category_action = () => {
@@ -58,11 +60,22 @@ let get_category_action = () => {
 
 const addCategory_action = (form) => {
     return async (dispatch) => {
-       try{
-        dispatch({
+         dispatch({
             type:CREATE_CATEGORIES_REQUEST,
         })
-        const res = await axiosInstance.post('/category/createCategory', form)
+       try{
+        
+        const token = window.localStorage.getItem('token')
+        console.log("sackasckhjasj")
+        console.log(token)
+        const Instance = axios.create({
+            baseURL : 'http://localhost:5000',
+            headers : {
+                'authorization' : token ? `Bearer ${token}` : ''
+            }
+        })
+        
+        const res = await Instance.post('/category/createCategory', form)
         console.log("res.data", res.data)
         if(res.status == 200)
         {

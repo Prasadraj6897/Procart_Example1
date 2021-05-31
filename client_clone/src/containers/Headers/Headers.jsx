@@ -123,7 +123,7 @@ const Header = (props) => {
 		return(
 			<DropdownMenu
 			  menu={
-				<a className="loginButton" onClick={() =>{ setSignupModal(false)}}>
+				<a className="loginButton" onClick={() =>{setLoginModal(true); setSignupModal(false)}}>
 				  Login
 				</a>
 			  }
